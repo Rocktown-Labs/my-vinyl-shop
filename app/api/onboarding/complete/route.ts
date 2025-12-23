@@ -55,6 +55,32 @@ export async function POST(request: Request) {
       }
     }
 
+    // Build base update set (always updated)
+    const baseUpdateSet = {
+      username,
+      displayName,
+      bio,
+      avatarUrl,
+      location,
+      country,
+      specializedGenres: genres ? JSON.stringify(genres) : null,
+      isSeller: accountType === "seller" || accountType === "both",
+      shipsWorldwide,
+      subscriptionTier: finalSubscriptionTier,
+      onboardingCompleted: true,
+      updatedAt: new Date(),
+    };
+
+    // Only update Stripe fields if stripeAccountId is provided
+    // This preserves existing Stripe Connect data if user re-runs onboarding without providing it
+    const updateSet = stripeAccountId
+      ? {
+          ...baseUpdateSet,
+          stripeConnectAccountId: stripeAccountId,
+          stripeConnectOnboardingStatus: "pending",
+        }
+      : baseUpdateSet;
+
     // Create or update user in database
     await db
       .insert(users)
@@ -79,24 +105,7 @@ export async function POST(request: Request) {
       })
       .onConflictDoUpdate({
         target: users.id,
-        set: {
-          username,
-          displayName,
-          bio,
-          avatarUrl,
-          location,
-          country,
-          specializedGenres: genres ? JSON.stringify(genres) : null,
-          isSeller: accountType === "seller" || accountType === "both",
-          shipsWorldwide,
-          subscriptionTier: finalSubscriptionTier,
-          stripeConnectAccountId: stripeAccountId || undefined,
-          stripeConnectOnboardingStatus: stripeAccountId
-            ? "pending"
-            : undefined,
-          onboardingCompleted: true,
-          updatedAt: new Date(),
-        },
+        set: updateSet,
       });
 
     // Update Clerk user metadata
