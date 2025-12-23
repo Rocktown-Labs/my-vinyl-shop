@@ -1,10 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2024-12-18.acacia",
-});
+import { getStripeClient } from "@/lib/stripe";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -14,6 +10,23 @@ export async function POST() {
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    let stripe;
+    try {
+      stripe = getStripeClient();
+    } catch (error) {
+      console.error("Stripe configuration error:", error);
+      return NextResponse.json(
+        {
+          error: "Stripe is not configured",
+          message:
+            error instanceof Error
+              ? error.message
+              : "STRIPE_SECRET_KEY is missing",
+        },
+        { status: 503 }
+      );
     }
 
     // Create Stripe Connect Express account

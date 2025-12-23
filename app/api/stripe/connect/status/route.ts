@@ -1,12 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import { getStripeClient } from "@/lib/stripe";
 import { db, users } from "@/lib/db";
 import { eq } from "drizzle-orm";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2024-12-18.acacia",
-});
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -30,6 +26,23 @@ export async function GET() {
         chargesEnabled: false,
         payoutsEnabled: false,
       });
+    }
+
+    let stripe;
+    try {
+      stripe = getStripeClient();
+    } catch (error) {
+      console.error("Stripe configuration error:", error);
+      return NextResponse.json(
+        {
+          error: "Stripe is not configured",
+          message:
+            error instanceof Error
+              ? error.message
+              : "STRIPE_SECRET_KEY is missing",
+        },
+        { status: 503 }
+      );
     }
 
     // Check account status with Stripe

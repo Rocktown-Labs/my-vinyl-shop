@@ -129,6 +129,8 @@ Required environment variables:
 - `KV_REST_API_TOKEN` or `UPSTASH_REDIS_REST_TOKEN` - Redis token (optional)
 - `BLOB_READ_WRITE_TOKEN` - Vercel Blob token for image uploads
 - `GOOGLE_GENERATIVE_AI_API_KEY` - For AI vinyl analysis
+- `STRIPE_SECRET_KEY` - Stripe secret key for Connect (optional for development, required for production)
+- `STRIPE_PUBLISHABLE_KEY` - Stripe publishable key (optional for development, required for production)
 
 4. Run database initialization:
 
