@@ -1,0 +1,12 @@
+var R=require("./chunks/[turbopack]_runtime.js")("server/middleware.js")
+R.c("server/chunks/2aeed_next_headers_fb5ac6bc.js")
+R.c("server/chunks/2aeed_next_dac1f787._.js")
+R.c("server/chunks/a4eef_@opentelemetry_api_build_esm_a9dea3b3._.js")
+R.c("server/chunks/d27ee_@clerk_shared_dist_runtime_580b917b._.js")
+R.c("server/chunks/5eb13_@clerk_backend_dist_f564361d._.js")
+R.c("server/chunks/e4f44_@clerk_nextjs_dist_esm_5532397c._.js")
+R.c("server/chunks/8ab1b_drizzle-orm_d2c28da8._.js")
+R.c("server/chunks/4e562_cookie_dist_index_0e829eb3.js")
+R.c("server/chunks/[root-of-the-server]__a8f36018._.js")
+R.m("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plugin-react-compiler@1._ae3e58926edfd4e7bb18b6bd40329e1e/node_modules/next/dist/esm/build/templates/middleware.js { INNER_MIDDLEWARE_MODULE => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/proxy.ts [middleware] (ecmascript)\" } [middleware] (ecmascript)")
+module.exports=R.m("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plugin-react-compiler@1._ae3e58926edfd4e7bb18b6bd40329e1e/node_modules/next/dist/esm/build/templates/middleware.js { INNER_MIDDLEWARE_MODULE => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/proxy.ts [middleware] (ecmascript)\" } [middleware] (ecmascript)").exports

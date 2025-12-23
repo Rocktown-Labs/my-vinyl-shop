@@ -1,5 +1,7 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
-import { NextResponse } from "next/server"
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import { db, users } from "@/lib/db";
+import { eq } from "drizzle-orm";
 
 const isPublicRoute = createRouteMatcher([
   "/",
@@ -10,40 +12,62 @@ const isPublicRoute = createRouteMatcher([
   "/auth/(.*)",
   "/api/webhooks/(.*)",
   "/api/search(.*)",
-])
+  "/api/onboarding/(.*)", // Allow onboarding API routes
+]);
 
-const isOnboardingRoute = createRouteMatcher(["/onboarding(.*)"])
+const isOnboardingRoute = createRouteMatcher(["/onboarding(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
-  const { userId, sessionClaims } = await auth()
+  const { userId, sessionClaims } = await auth();
 
   // Allow public routes
   if (isPublicRoute(req)) {
-    return NextResponse.next()
+    return NextResponse.next();
+  }
+
+  // Always allow API routes for authenticated users (they handle their own auth)
+  if (req.nextUrl.pathname.startsWith("/api/")) {
+    return NextResponse.next();
   }
 
   // If not signed in and trying to access protected route, redirect to sign in
   if (!userId) {
-    const signInUrl = new URL("/auth/signin", req.url)
-    signInUrl.searchParams.set("redirect_url", req.url)
-    return NextResponse.redirect(signInUrl)
+    const signInUrl = new URL("/auth/signin", req.url);
+    signInUrl.searchParams.set("redirect_url", req.url);
+    return NextResponse.redirect(signInUrl);
   }
 
   // Check if user has completed onboarding
-  const onboardingComplete = sessionClaims?.metadata?.onboardingComplete
+  // First check session claims (fastest)
+  let onboardingComplete = sessionClaims?.metadata?.onboardingComplete;
+
+  // If not in session claims, check database as fallback
+  if (onboardingComplete === undefined) {
+    try {
+      const user = await db.query.users.findFirst({
+        where: eq(users.id, userId),
+        columns: { onboardingCompleted: true },
+      });
+      onboardingComplete = user?.onboardingCompleted || false;
+    } catch (error) {
+      // If database check fails, default to false (require onboarding)
+      console.warn("Failed to check onboarding status in database:", error);
+      onboardingComplete = false;
+    }
+  }
 
   // If onboarding not complete and not on onboarding route, redirect to onboarding
   if (!onboardingComplete && !isOnboardingRoute(req)) {
-    return NextResponse.redirect(new URL("/onboarding", req.url))
+    return NextResponse.redirect(new URL("/onboarding", req.url));
   }
 
   // If onboarding complete and on onboarding route, redirect to dashboard
   if (onboardingComplete && isOnboardingRoute(req)) {
-    return NextResponse.redirect(new URL("/dashboard", req.url))
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
-  return NextResponse.next()
-})
+  return NextResponse.next();
+});
 
 export const config = {
   matcher: [
@@ -52,4 +76,4 @@ export const config = {
     // Always run for API routes
     "/(api|trpc)(.*)",
   ],
-}
+};

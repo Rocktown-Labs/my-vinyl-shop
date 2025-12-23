@@ -14,13 +14,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { mockVinyls, type Vinyl } from "@/lib/mock-data"
+import { useVinyls } from "@/lib/hooks/use-vinyls"
 import type { ColumnDef } from "@tanstack/react-table"
-
-const myListings = mockVinyls.slice(0, 8)
-
-const newListings = myListings.filter((v) => v.condition === "sealed" || v.condition === "mint")
-const usedListings = myListings.filter((v) => v.condition !== "sealed" && v.condition !== "mint")
+import type { Vinyl } from "@/lib/db/schema"
+import { Skeleton } from "@/components/ui/skeleton"
+import Image from "next/image"
 
 const columns: ColumnDef<Vinyl>[] = [
   {
@@ -39,13 +37,19 @@ const columns: ColumnDef<Vinyl>[] = [
     },
     cell: ({ row }) => {
       const vinyl = row.original
+      const images = vinyl.images ? JSON.parse(vinyl.images) : []
+      const coverImage = images[0]?.url || "/placeholder.svg"
       return (
         <div className="flex items-center gap-3">
-          <img
-            src={vinyl.images.frontCover || "/placeholder.svg"}
-            alt={vinyl.title}
-            className="h-12 w-12 rounded-lg object-cover"
-          />
+          <div className="h-12 w-12 rounded-lg overflow-hidden bg-muted shrink-0">
+            <Image
+              src={coverImage}
+              alt={vinyl.title}
+              width={48}
+              height={48}
+              className="w-full h-full object-cover"
+            />
+          </div>
           <div>
             <span className="font-medium text-sm line-clamp-1">{vinyl.title}</span>
             <p className="text-xs text-muted-foreground">{vinyl.artist}</p>
@@ -88,11 +92,12 @@ const columns: ColumnDef<Vinyl>[] = [
       )
     },
     cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue("price"))
+      const price = row.getValue("price") as number | null
+      if (!price) return <span className="text-sm text-muted-foreground">—</span>
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(amount)
+      }).format(price)
       return <span className="font-semibold text-sm">{formatted}</span>
     },
   },
@@ -132,13 +137,17 @@ const columns: ColumnDef<Vinyl>[] = [
 ]
 
 function MobileListingCard({ vinyl }: { vinyl: Vinyl }) {
+  const images = vinyl.images ? JSON.parse(vinyl.images) : []
+  const coverImage = images[0]?.url || "/placeholder.svg"
+  
   return (
     <div className="flex-shrink-0 w-[160px] rounded-xl bg-card border shadow-sm overflow-hidden">
       <div className="relative aspect-square">
-        <img
-          src={vinyl.images.frontCover || "/placeholder.svg"}
+        <Image
+          src={coverImage}
           alt={vinyl.title}
-          className="h-full w-full object-cover"
+          fill
+          className="object-cover"
         />
         {vinyl.quantity && vinyl.quantity > 1 && (
           <Badge className="absolute top-2 right-2 text-[10px] px-1.5 py-0.5 bg-primary/90">x{vinyl.quantity}</Badge>
@@ -159,7 +168,11 @@ function MobileListingCard({ vinyl }: { vinyl: Vinyl }) {
         <p className="font-medium text-xs truncate">{vinyl.title}</p>
         <p className="text-[10px] text-muted-foreground truncate">{vinyl.artist}</p>
         <div className="flex items-center justify-between pt-1">
-          <span className="text-sm font-bold">${vinyl.price}</span>
+          {vinyl.price ? (
+            <span className="text-sm font-bold">${vinyl.price.toFixed(2)}</span>
+          ) : (
+            <span className="text-xs text-muted-foreground">No price</span>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="h-6 w-6">
@@ -186,12 +199,45 @@ function MobileListingCard({ vinyl }: { vinyl: Vinyl }) {
 }
 
 export default function ListingsPage() {
+  const { data: listings, isLoading } = useVinyls("listings")
+
+  const newListings = listings?.filter((v) => v.condition === "sealed" || v.condition === "mint") || []
+  const usedListings = listings?.filter((v) => v.condition !== "sealed" && v.condition !== "mint") || []
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 sm:space-y-8 py-4 sm:py-6 px-4 sm:px-0">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <Skeleton className="h-8 w-48 mb-2" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+          <Skeleton className="h-10 w-32" />
+        </div>
+        <Card className="border-0 shadow-sm">
+          <CardHeader className="p-4 sm:p-6">
+            <Skeleton className="h-6 w-32" />
+          </CardHeader>
+          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+            <div className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-16 w-full" />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6 sm:space-y-8 py-4 sm:py-6 px-4 sm:px-0">
       <div className="flex items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">My Listings</h1>
-          <p className="text-sm sm:text-base text-muted-foreground">Manage your vinyl records</p>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            Manage your vinyl records ({listings?.length || 0} total)
+          </p>
         </div>
         <Button asChild className="rounded-full text-xs sm:text-sm">
           <Link href="/dashboard/listings/new">
@@ -202,63 +248,72 @@ export default function ListingsPage() {
         </Button>
       </div>
 
-      <div className="space-y-6 sm:hidden">
-        {/* New Listings Section */}
-        {newListings.length > 0 && (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-green-500" />
-                New & Sealed
-              </h2>
-              <span className="text-xs text-muted-foreground">{newListings.length} items</span>
-            </div>
-            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-              {newListings.map((vinyl) => (
-                <MobileListingCard key={vinyl.id} vinyl={vinyl} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Used Listings Section */}
-        {usedListings.length > 0 && (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-amber-500" />
-                Used
-              </h2>
-              <span className="text-xs text-muted-foreground">{usedListings.length} items</span>
-            </div>
-            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-              {usedListings.map((vinyl) => (
-                <MobileListingCard key={vinyl.id} vinyl={vinyl} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Empty State */}
-        {myListings.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">No listings yet</p>
-            <Button asChild className="mt-4">
+      {listings && listings.length === 0 ? (
+        <Card className="border-0 shadow-sm">
+          <CardContent className="p-12 text-center">
+            <p className="text-muted-foreground mb-4">No listings yet</p>
+            <Button asChild>
               <Link href="/dashboard/listings/new">Create your first listing</Link>
             </Button>
-          </div>
-        )}
-      </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <>
+          <div className="space-y-6 sm:hidden">
+            {/* New Listings Section */}
+            {newListings.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-semibold flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-green-500" />
+                    New & Sealed
+                  </h2>
+                  <span className="text-xs text-muted-foreground">{newListings.length} items</span>
+                </div>
+                <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+                  {newListings.map((vinyl) => (
+                    <MobileListingCard key={vinyl.id} vinyl={vinyl} />
+                  ))}
+                </div>
+              </div>
+            )}
 
-      {/* Desktop/Tablet Data Table */}
-      <Card className="border-0 shadow-sm hidden sm:block">
-        <CardHeader className="p-4 sm:p-6">
-          <CardTitle className="text-base sm:text-lg">All Listings ({myListings.length})</CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
-          <DataTable columns={columns} data={myListings} searchKey="title" searchPlaceholder="Search listings..." />
-        </CardContent>
-      </Card>
+            {/* Used Listings Section */}
+            {usedListings.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-semibold flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-amber-500" />
+                    Used
+                  </h2>
+                  <span className="text-xs text-muted-foreground">{usedListings.length} items</span>
+                </div>
+                <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+                  {usedListings.map((vinyl) => (
+                    <MobileListingCard key={vinyl.id} vinyl={vinyl} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop/Tablet Data Table */}
+          <Card className="border-0 shadow-sm hidden sm:block">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-base sm:text-lg">All Listings ({listings?.length || 0})</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+              {listings && listings.length > 0 ? (
+                <DataTable columns={columns} data={listings} searchKey="title" searchPlaceholder="Search listings..." />
+              ) : (
+                <div className="text-center py-12 text-muted-foreground">
+                  <p>No listings found</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </>
+      )}
     </div>
   )
 }

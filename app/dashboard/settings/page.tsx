@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { Bell, CreditCard, Globe, Lock, Moon, Shield, Sun, User, Mail, Smartphone } from "lucide-react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { Bell, CreditCard, Globe, Lock, Moon, Shield, Sun, User, Mail, Smartphone, Loader2, CheckCircle2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -13,6 +14,71 @@ import { Separator } from "@/components/ui/separator"
 
 export default function SettingsPage() {
   const [theme, setTheme] = useState("light")
+  const router = useRouter()
+  const [stripeStatus, setStripeStatus] = useState<{
+    hasAccount: boolean
+    status: string | null
+    accountId: string | null
+    isSeller: boolean
+  } | null>(null)
+  const [isLoadingStripe, setIsLoadingStripe] = useState(true)
+  const [isSettingUp, setIsSettingUp] = useState(false)
+
+  useEffect(() => {
+    const checkStripe = async () => {
+      try {
+        const res = await fetch("/api/stripe/connect/check")
+        if (res.ok) {
+          const data = await res.json()
+          setStripeStatus(data)
+        }
+      } catch (error) {
+        console.error("Error checking Stripe:", error)
+      } finally {
+        setIsLoadingStripe(false)
+      }
+    }
+    checkStripe()
+  }, [])
+
+  const handleSetupStripe = async () => {
+    setIsSettingUp(true)
+    try {
+      if (!stripeStatus?.hasAccount) {
+        // Create account
+        const accountRes = await fetch("/api/stripe/connect/create-account", {
+          method: "POST",
+        })
+        if (!accountRes.ok) throw new Error("Failed to create account")
+        const { accountId } = await accountRes.json()
+
+        // Create onboarding link
+        const linkRes = await fetch("/api/stripe/connect/create-link", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ accountId }),
+        })
+        if (!linkRes.ok) throw new Error("Failed to create link")
+        const { url } = await linkRes.json()
+        window.location.href = url
+      } else {
+        // Create new onboarding link for existing account
+        const linkRes = await fetch("/api/stripe/connect/create-link", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ accountId: stripeStatus.accountId }),
+        })
+        if (!linkRes.ok) throw new Error("Failed to create link")
+        const { url } = await linkRes.json()
+        window.location.href = url
+      }
+    } catch (error) {
+      console.error("Error setting up Stripe:", error)
+      alert("Failed to set up payments. Please try again.")
+    } finally {
+      setIsSettingUp(false)
+    }
+  }
 
   return (
     <div className="space-y-6 sm:space-y-8 py-4 sm:py-6 px-4 sm:px-0">
@@ -291,31 +357,85 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0 space-y-4">
-              <div className="border rounded-xl p-3 sm:p-4 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                  <div className="h-8 w-8 sm:h-10 sm:w-10 bg-muted rounded-full flex items-center justify-center shrink-0">
-                    <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+              {isLoadingStripe ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                </div>
+              ) : !stripeStatus?.hasAccount || stripeStatus?.status !== "active" ? (
+                <div className="space-y-4">
+                  <div className="border border-orange-200 dark:border-orange-900 bg-orange-50 dark:bg-orange-950/20 rounded-xl p-4">
+                    <div className="flex items-start gap-3">
+                      <AlertCircle className="h-5 w-5 text-orange-600 dark:text-orange-400 shrink-0 mt-0.5" />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm mb-1">Payment setup required</h4>
+                        <p className="text-xs sm:text-sm text-muted-foreground mb-3">
+                          {!stripeStatus?.hasAccount
+                            ? "Connect your Stripe account to receive payments from buyers. You need this to create listings."
+                            : "Complete your Stripe Connect onboarding to start receiving payments."}
+                        </p>
+                        <Button
+                          onClick={handleSetupStripe}
+                          disabled={isSettingUp}
+                          size="sm"
+                          className="rounded-full"
+                        >
+                          {isSettingUp ? (
+                            <>
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                              Setting up...
+                            </>
+                          ) : (
+                            <>
+                              <CreditCard className="h-4 w-4 mr-2" />
+                              {!stripeStatus?.hasAccount ? "Connect Stripe Account" : "Complete Setup"}
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <p className="font-medium text-sm">Bank Account</p>
-                    <p className="text-xs text-muted-foreground">•••• 5678</p>
+                </div>
+              ) : (
+                <>
+                  <div className="border rounded-xl p-3 sm:p-4 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center shrink-0">
+                        <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-medium text-sm">Stripe Connect Active</p>
+                        <p className="text-xs text-muted-foreground">Ready to receive payments</p>
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="shrink-0 text-xs"
+                      onClick={handleSetupStripe}
+                      disabled={isSettingUp}
+                    >
+                      {isSettingUp ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        "Update"
+                      )}
+                    </Button>
                   </div>
-                </div>
-                <Button variant="ghost" size="sm" className="shrink-0 text-xs">
-                  Edit
-                </Button>
-              </div>
-              <div className="bg-muted/50 rounded-xl p-3 sm:p-4">
-                <div className="flex justify-between mb-2 text-sm">
-                  <span className="text-muted-foreground">Available Balance</span>
-                  <span className="font-semibold">$1,247.50</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Pending</span>
-                  <span className="font-medium">$328.00</span>
-                </div>
-              </div>
-              <Button className="rounded-full w-full sm:w-auto">Withdraw Funds</Button>
+                  <div className="bg-muted/50 rounded-xl p-3 sm:p-4">
+                    <div className="flex justify-between mb-2 text-sm">
+                      <span className="text-muted-foreground">Available Balance</span>
+                      <span className="font-semibold">$0.00</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Pending</span>
+                      <span className="font-medium">$0.00</span>
+                    </div>
+                  </div>
+                  <Button className="rounded-full w-full sm:w-auto" disabled>
+                    Withdraw Funds
+                  </Button>
+                </>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

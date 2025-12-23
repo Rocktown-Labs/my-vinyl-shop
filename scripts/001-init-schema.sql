@@ -18,6 +18,9 @@ CREATE TABLE IF NOT EXISTS users (
   ships_worldwide INTEGER DEFAULT 0,
   specialized_genres TEXT,
   onboarding_completed INTEGER DEFAULT 0,
+  stripe_connect_account_id TEXT,
+  stripe_connect_onboarding_status TEXT,
+  stripe_connect_onboarding_link TEXT,
   created_at INTEGER,
   updated_at INTEGER
 );

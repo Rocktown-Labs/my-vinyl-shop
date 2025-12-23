@@ -1,5 +1,5 @@
-import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core"
-import { relations } from "drizzle-orm"
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
+import { relations } from "drizzle-orm";
 
 // Users table - extends Clerk user data
 export const users = sqliteTable("users", {
@@ -18,12 +18,24 @@ export const users = sqliteTable("users", {
   isVerified: integer("is_verified", { mode: "boolean" }).default(false),
   isSeller: integer("is_seller", { mode: "boolean" }).default(false),
   subscriptionTier: text("subscription_tier").default("free"), // free, pro, crate_digger
-  shipsWorldwide: integer("ships_worldwide", { mode: "boolean" }).default(false),
+  shipsWorldwide: integer("ships_worldwide", { mode: "boolean" }).default(
+    false
+  ),
   specializedGenres: text("specialized_genres"), // JSON array
-  onboardingCompleted: integer("onboarding_completed", { mode: "boolean" }).default(false),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-})
+  onboardingCompleted: integer("onboarding_completed", {
+    mode: "boolean",
+  }).default(false),
+  // Stripe Connect fields
+  stripeConnectAccountId: text("stripe_connect_account_id"),
+  stripeConnectOnboardingStatus: text("stripe_connect_onboarding_status"), // pending, active, restricted
+  stripeConnectOnboardingLink: text("stripe_connect_onboarding_link"),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+});
 
 // Vinyl records - can be collection items or listings
 export const vinyls = sqliteTable("vinyls", {
@@ -50,7 +62,9 @@ export const vinyls = sqliteTable("vinyls", {
 
   // Listing vs Collection
   isListed: integer("is_listed", { mode: "boolean" }).default(false),
-  isInCollection: integer("is_in_collection", { mode: "boolean" }).default(true),
+  isInCollection: integer("is_in_collection", { mode: "boolean" }).default(
+    true
+  ),
 
   // Pricing (only relevant if isListed)
   price: real("price"),
@@ -67,9 +81,13 @@ export const vinyls = sqliteTable("vinyls", {
   aiSuggestedPrice: real("ai_suggested_price"),
   aiConditionNotes: text("ai_condition_notes"),
 
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-})
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+});
 
 // Orders
 export const orders = sqliteTable("orders", {
@@ -92,9 +110,13 @@ export const orders = sqliteTable("orders", {
   shippingAddress: text("shipping_address"), // JSON
   trackingNumber: text("tracking_number"),
   notes: text("notes"),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-})
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+});
 
 // Follows
 export const follows = sqliteTable("follows", {
@@ -107,8 +129,10 @@ export const follows = sqliteTable("follows", {
   followingId: text("following_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-})
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+});
 
 // Messages
 export const conversations = sqliteTable("conversations", {
@@ -124,8 +148,10 @@ export const conversations = sqliteTable("conversations", {
   orderId: text("order_id").references(() => orders.id), // Optional - for order-related conversations
   vinylId: text("vinyl_id").references(() => vinyls.id), // Optional - for product inquiries
   lastMessageAt: integer("last_message_at", { mode: "timestamp" }),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-})
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+});
 
 export const messages = sqliteTable("messages", {
   id: text("id")
@@ -139,8 +165,10 @@ export const messages = sqliteTable("messages", {
     .references(() => users.id),
   content: text("content").notNull(),
   isRead: integer("is_read", { mode: "boolean" }).default(false),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-})
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+});
 
 // Auction bids
 export const bids = sqliteTable("bids", {
@@ -154,8 +182,10 @@ export const bids = sqliteTable("bids", {
     .notNull()
     .references(() => users.id),
   amount: real("amount").notNull(),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-})
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+});
 
 // Notifications
 export const notifications = sqliteTable("notifications", {
@@ -171,8 +201,10 @@ export const notifications = sqliteTable("notifications", {
   linkUrl: text("link_url"),
   isRead: integer("is_read", { mode: "boolean" }).default(false),
   metadata: text("metadata"), // JSON for additional data
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
-})
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
+    () => new Date()
+  ),
+});
 
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
@@ -182,55 +214,89 @@ export const usersRelations = relations(users, ({ many }) => ({
   followers: many(follows, { relationName: "following" }),
   following: many(follows, { relationName: "follower" }),
   notifications: many(notifications),
-}))
+}));
 
 export const vinylsRelations = relations(vinyls, ({ one, many }) => ({
   user: one(users, { fields: [vinyls.userId], references: [users.id] }),
   bids: many(bids),
-}))
+}));
 
 export const ordersRelations = relations(orders, ({ one }) => ({
-  buyer: one(users, { fields: [orders.buyerId], references: [users.id], relationName: "buyer" }),
-  seller: one(users, { fields: [orders.sellerId], references: [users.id], relationName: "seller" }),
+  buyer: one(users, {
+    fields: [orders.buyerId],
+    references: [users.id],
+    relationName: "buyer",
+  }),
+  seller: one(users, {
+    fields: [orders.sellerId],
+    references: [users.id],
+    relationName: "seller",
+  }),
   vinyl: one(vinyls, { fields: [orders.vinylId], references: [vinyls.id] }),
-}))
+}));
 
 export const followsRelations = relations(follows, ({ one }) => ({
-  follower: one(users, { fields: [follows.followerId], references: [users.id], relationName: "follower" }),
-  following: one(users, { fields: [follows.followingId], references: [users.id], relationName: "following" }),
-}))
+  follower: one(users, {
+    fields: [follows.followerId],
+    references: [users.id],
+    relationName: "follower",
+  }),
+  following: one(users, {
+    fields: [follows.followingId],
+    references: [users.id],
+    relationName: "following",
+  }),
+}));
 
-export const conversationsRelations = relations(conversations, ({ one, many }) => ({
-  participant1: one(users, { fields: [conversations.participant1Id], references: [users.id] }),
-  participant2: one(users, { fields: [conversations.participant2Id], references: [users.id] }),
-  messages: many(messages),
-  order: one(orders, { fields: [conversations.orderId], references: [orders.id] }),
-  vinyl: one(vinyls, { fields: [conversations.vinylId], references: [vinyls.id] }),
-}))
+export const conversationsRelations = relations(
+  conversations,
+  ({ one, many }) => ({
+    participant1: one(users, {
+      fields: [conversations.participant1Id],
+      references: [users.id],
+    }),
+    participant2: one(users, {
+      fields: [conversations.participant2Id],
+      references: [users.id],
+    }),
+    messages: many(messages),
+    order: one(orders, {
+      fields: [conversations.orderId],
+      references: [orders.id],
+    }),
+    vinyl: one(vinyls, {
+      fields: [conversations.vinylId],
+      references: [vinyls.id],
+    }),
+  })
+);
 
 export const messagesRelations = relations(messages, ({ one }) => ({
-  conversation: one(conversations, { fields: [messages.conversationId], references: [conversations.id] }),
+  conversation: one(conversations, {
+    fields: [messages.conversationId],
+    references: [conversations.id],
+  }),
   sender: one(users, { fields: [messages.senderId], references: [users.id] }),
-}))
+}));
 
 export const bidsRelations = relations(bids, ({ one }) => ({
   vinyl: one(vinyls, { fields: [bids.vinylId], references: [vinyls.id] }),
   bidder: one(users, { fields: [bids.bidderId], references: [users.id] }),
-}))
+}));
 
 export const notificationsRelations = relations(notifications, ({ one }) => ({
   user: one(users, { fields: [notifications.userId], references: [users.id] }),
-}))
+}));
 
 // Type exports
-export type User = typeof users.$inferSelect
-export type NewUser = typeof users.$inferInsert
-export type Vinyl = typeof vinyls.$inferSelect
-export type NewVinyl = typeof vinyls.$inferInsert
-export type Order = typeof orders.$inferSelect
-export type NewOrder = typeof orders.$inferInsert
-export type Follow = typeof follows.$inferSelect
-export type Conversation = typeof conversations.$inferSelect
-export type Message = typeof messages.$inferSelect
-export type Bid = typeof bids.$inferSelect
-export type Notification = typeof notifications.$inferSelect
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+export type Vinyl = typeof vinyls.$inferSelect;
+export type NewVinyl = typeof vinyls.$inferInsert;
+export type Order = typeof orders.$inferSelect;
+export type NewOrder = typeof orders.$inferInsert;
+export type Follow = typeof follows.$inferSelect;
+export type Conversation = typeof conversations.$inferSelect;
+export type Message = typeof messages.$inferSelect;
+export type Bid = typeof bids.$inferSelect;
+export type Notification = typeof notifications.$inferSelect;
