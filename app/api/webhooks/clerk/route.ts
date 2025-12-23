@@ -2,6 +2,7 @@ import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest, NextResponse } from "next/server";
 import { db, users } from "@/lib/db";
 import { eq } from "drizzle-orm";
+import { generateRandomUsername } from "@/lib/utils/username";
 
 // Ensure this route is dynamic
 export const dynamic = "force-dynamic";
@@ -37,6 +38,21 @@ export async function POST(req: NextRequest) {
     const displayName =
       [first_name, last_name].filter(Boolean).join(" ") || null;
 
+    // Generate random username if not provided
+    let finalUsername = username;
+    if (!finalUsername) {
+      // Try to generate a unique username
+      let attempts = 0;
+      while (attempts < 10) {
+        finalUsername = generateRandomUsername();
+        const existing = await db.query.users.findFirst({
+          where: eq(users.username, finalUsername),
+        });
+        if (!existing) break;
+        attempts++;
+      }
+    }
+
     switch (evt.type) {
       case "user.created":
         // Create new user in database
@@ -44,7 +60,7 @@ export async function POST(req: NextRequest) {
           await db.insert(users).values({
             id,
             email: primaryEmail,
-            username: username || null,
+            username: finalUsername || null,
             displayName: displayName,
             avatarUrl: image_url || null,
             createdAt: created_at ? new Date(created_at) : new Date(),
@@ -61,7 +77,7 @@ export async function POST(req: NextRequest) {
               .update(users)
               .set({
                 email: primaryEmail,
-                username: username || null,
+                username: finalUsername || null,
                 displayName: displayName,
                 avatarUrl: image_url || null,
                 updatedAt: new Date(),
@@ -81,7 +97,7 @@ export async function POST(req: NextRequest) {
             .update(users)
             .set({
               email: primaryEmail,
-              username: username || null,
+              // Don't update username on webhook update (only on user.created)
               displayName: displayName,
               avatarUrl: image_url || null,
               updatedAt: new Date(),
@@ -97,7 +113,7 @@ export async function POST(req: NextRequest) {
             await db.insert(users).values({
               id,
               email: primaryEmail,
-              username: username || null,
+              username: finalUsername || null,
               displayName: displayName,
               avatarUrl: image_url || null,
               createdAt: created_at ? new Date(created_at) : new Date(),

@@ -1,11 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Grid3X3, List } from "lucide-react";
 import Link from "next/link";
 import { DashboardBottomNav } from "@/components/dashboard-bottom-nav";
 import { CollectionGrid } from "@/components/dashboard/collection-grid";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
+
+function CollectionGridSkeleton() {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <Card key={i} className="overflow-hidden">
+          <Skeleton className="aspect-square" />
+          <CardContent className="p-3">
+            <Skeleton className="h-4 w-3/4 mb-2" />
+            <Skeleton className="h-3 w-1/2" />
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
 
 export default function CollectionPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -49,7 +67,9 @@ export default function CollectionPage() {
           </div>
         </div>
 
-        <CollectionGrid viewMode={viewMode} />
+        <Suspense fallback={<CollectionGridSkeleton />}>
+          <CollectionGrid viewMode={viewMode} />
+        </Suspense>
       </div>
       <DashboardBottomNav />
     </div>

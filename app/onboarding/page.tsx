@@ -514,7 +514,7 @@ export default function OnboardingPage() {
                             id="username"
                             value={field.state.value}
                             onChange={(e) => {
-                              const sanitized = e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, "")
+                              const sanitized = e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, "")
                               field.handleChange(sanitized)
                               setProgress({ username: sanitized })
                             }}

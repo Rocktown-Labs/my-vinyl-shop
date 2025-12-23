@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { MobileBottomNav } from "@/components/mobile-bottom-nav"
@@ -15,8 +15,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Star, SlidersHorizontal, ChevronDown, X, Search, MapPin, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
-import { mockSellers, countries, genres } from "@/lib/mock-data"
-import { motion } from "motion/react"
+import { countries, genres } from "@/lib/mock-data"
+import { SellersList } from "@/components/sellers/sellers-list"
 
 export default function SellersPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -26,50 +26,13 @@ export default function SellersPage() {
   const [verifiedOnly, setVerifiedOnly] = useState(false)
   const [shipsWorldwide, setShipsWorldwide] = useState(false)
 
-  const filteredSellers = useMemo(() => {
-    return mockSellers.filter((seller) => {
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase()
-        if (
-          !seller.name.toLowerCase().includes(query) &&
-          !seller.username.toLowerCase().includes(query) &&
-          !seller.location.toLowerCase().includes(query) &&
-          !seller.bio.toLowerCase().includes(query)
-        ) {
-          return false
-        }
-      }
-
-      if (selectedCountries.length > 0 && !selectedCountries.includes(seller.country)) {
-        return false
-      }
-
-      if (selectedGenres.length > 0 && !seller.genres.some((g) => selectedGenres.includes(g))) {
-        return false
-      }
-
-      if (minRating > 0 && seller.rating < minRating) {
-        return false
-      }
-
-      if (verifiedOnly && !seller.verified) {
-        return false
-      }
-
-      if (shipsWorldwide && !seller.shipsTo.includes("Worldwide")) {
-        return false
-      }
-
-      return true
-    })
-  }, [searchQuery, selectedCountries, selectedGenres, minRating, verifiedOnly, shipsWorldwide])
-
   const activeFiltersCount =
     selectedCountries.length +
     selectedGenres.length +
     (minRating > 0 ? 1 : 0) +
     (verifiedOnly ? 1 : 0) +
-    (shipsWorldwide ? 1 : 0)
+    (shipsWorldwide ? 1 : 0) +
+    (searchQuery ? 1 : 0)
 
   const clearAllFilters = () => {
     setSelectedCountries([])
@@ -454,53 +417,15 @@ export default function SellersPage() {
             </div>
           )}
 
-          {/* Results count */}
-          <p className="text-sm text-muted-foreground mb-6">
-            {filteredSellers.length} {filteredSellers.length === 1 ? "seller" : "sellers"}
-          </p>
-
           {/* Sellers Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-            {filteredSellers.map((seller, i) => (
-              <motion.div
-                key={seller.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="flex-shrink-0"
-              >
-                <Link href={`/seller/${seller.id}`}>
-                  <Card className="group overflow-hidden border-0 shadow-sm hover:shadow-xl transition-all duration-300 h-full">
-                    <CardContent className="p-0 relative">
-                      <div className="aspect-[3/4] relative overflow-hidden">
-                        <img
-                          src={seller.avatar || "/placeholder.svg"}
-                          alt={seller.name}
-                          className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        {seller.verified && (
-                          <Badge className="absolute top-2 right-2 bg-emerald-500/90 text-white border-0 text-[10px] px-1.5">
-                            <CheckCircle2 className="h-3 w-3 mr-0.5" />
-                            Verified
-                          </Badge>
-                        )}
-                        <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-                          <h3 className="font-bold text-sm sm:text-base leading-tight line-clamp-1">{seller.name}</h3>
-                          <p className="text-xs opacity-80 line-clamp-1">{seller.location}</p>
-                          <div className="flex items-center gap-1 mt-1">
-                            <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                            <span className="text-xs font-medium">{seller.rating}</span>
-                            <span className="text-xs opacity-60">· {seller.sales} sales</span>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+          <SellersList
+            searchQuery={searchQuery}
+            selectedCountries={selectedCountries}
+            selectedGenres={selectedGenres}
+            minRating={minRating}
+            verifiedOnly={verifiedOnly}
+            shipsWorldwide={shipsWorldwide}
+          />
         </div>
       </main>
       <SiteFooter />

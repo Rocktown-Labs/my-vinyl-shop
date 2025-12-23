@@ -10,8 +10,15 @@ import { Music, User } from "lucide-react";
 import type { SearchResult } from "@/lib/hooks/use-search";
 
 function SearchResultCard({ result }: { result: SearchResult }) {
+  // Use username for seller links if available, otherwise use ID
+  const sellerLink = result.type === "seller" && result.metadata?.username
+    ? `/seller/${result.metadata.username}`
+    : result.type === "seller"
+    ? `/seller/${result.id}`
+    : `/product/${result.id}`;
+
   return (
-    <Link href={result.type === "vinyl" ? `/product/${result.id}` : `/seller/${result.id}`}>
+    <Link href={sellerLink}>
       <Card className="w-[200px] shrink-0 hover:shadow-md transition-shadow cursor-pointer">
         <div className="relative aspect-square bg-muted">
           {result.image ? (

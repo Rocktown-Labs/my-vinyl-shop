@@ -69,7 +69,7 @@ function FeedPostCard({ post }: { post: FeedPost }) {
       <CardContent className="p-4 sm:p-6">
         {/* Header */}
         <div className="flex items-start gap-3 mb-4">
-          <Link href={`/seller/${post.sellerId}`}>
+          <Link href={post.seller?.username ? `/seller/${post.seller.username}` : `/seller/${post.sellerId}`}>
             <Avatar className="h-10 w-10">
               <AvatarImage src={post.seller?.avatarUrl || "/placeholder.svg"} />
               <AvatarFallback>
@@ -79,7 +79,7 @@ function FeedPostCard({ post }: { post: FeedPost }) {
           </Link>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <Link href={`/seller/${post.sellerId}`}>
+              <Link href={post.seller?.username ? `/seller/${post.seller.username}` : `/seller/${post.sellerId}`}>
                 <span className="font-semibold text-sm hover:underline">
                   {post.seller?.displayName || "Unknown"}
                 </span>
@@ -137,7 +137,7 @@ function FeedPostCard({ post }: { post: FeedPost }) {
             Like
           </Button>
           <Button variant="ghost" size="sm" className="rounded-full" asChild>
-            <Link href={`/seller/${post.sellerId}`}>
+            <Link href={post.seller?.username ? `/seller/${post.seller.username}` : `/seller/${post.sellerId}`}>
               <MessageCircle className="h-4 w-4 mr-2" />
               Message
             </Link>

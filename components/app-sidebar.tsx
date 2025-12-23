@@ -7,7 +7,6 @@ import {
   User,
   Settings,
   PlusCircle,
-  LogOut,
   Search,
   Rss,
   Bell,
@@ -27,11 +26,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useUser, useClerk } from "@clerk/nextjs"
+import { UserButton } from "@clerk/nextjs"
 
 const menuItems = [
   {
@@ -85,8 +83,6 @@ const menuItems = [
 
 export function AppSidebar() {
   const pathname = usePathname()
-  const { user } = useUser()
-  const { signOut } = useClerk()
 
   return (
     <Sidebar>
@@ -162,22 +158,19 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton>
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={user?.imageUrl || "/placeholder.svg"} />
-                <AvatarFallback>{user?.firstName?.[0] || user?.username?.[0] || "U"}</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-medium text-sm">{user?.fullName || user?.username || "User"}</span>
-                <span className="text-xs text-muted-foreground">{user?.primaryEmailAddress?.emailAddress}</span>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton onClick={() => signOut({ redirectUrl: "/" })}>
-              <LogOut />
-              <span>Sign Out</span>
-            </SidebarMenuButton>
+            <div className="flex items-center justify-center w-full p-2">
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "h-8 w-8",
+                    userButtonPopoverCard: "shadow-lg border",
+                    userButtonPopoverActions: "gap-1",
+                    userButtonPopoverActionButton: "rounded-lg",
+                  },
+                }}
+                afterSignOutUrl="/"
+              />
+            </div>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

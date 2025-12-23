@@ -1,6 +1,31 @@
 import { FeedPosts } from "@/components/dashboard/feed-posts";
 import { DashboardBottomNav } from "@/components/dashboard-bottom-nav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
+
+function FeedPostsSkeleton() {
+  return (
+    <div className="space-y-4">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Card key={i} className="border-0 shadow-sm">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <Skeleton className="h-10 w-10 rounded-full" />
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-3 w-24" />
+              </div>
+            </div>
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-3/4" />
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
 
 export default function FeedPage() {
   return (
@@ -28,15 +53,21 @@ export default function FeedPage() {
         </TabsList>
 
         <TabsContent value="all">
-          <FeedPosts />
+          <Suspense fallback={<FeedPostsSkeleton />}>
+            <FeedPosts />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="listings">
-          <FeedPosts />
+          <Suspense fallback={<FeedPostsSkeleton />}>
+            <FeedPosts />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="deals">
-          <FeedPosts />
+          <Suspense fallback={<FeedPostsSkeleton />}>
+            <FeedPosts />
+          </Suspense>
         </TabsContent>
       </Tabs>
 

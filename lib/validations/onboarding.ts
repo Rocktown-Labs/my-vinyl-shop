@@ -13,8 +13,8 @@ export const onboardingStep2Schema = z.object({
     .min(3, "Username must be at least 3 characters")
     .max(50, "Username must be less than 50 characters")
     .regex(
-      /^[a-zA-Z0-9_]+$/,
-      "Username can only contain letters, numbers, and underscores"
+      /^[a-zA-Z0-9_-]+$/,
+      "Username can only contain letters, numbers, underscores, and dashes"
     ),
   bio: z.string().max(500).optional(),
   avatarUrl: z.string().optional(),

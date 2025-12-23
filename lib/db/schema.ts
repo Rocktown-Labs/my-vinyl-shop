@@ -29,6 +29,10 @@ export const users = sqliteTable("users", {
   stripeConnectAccountId: text("stripe_connect_account_id"),
   stripeConnectOnboardingStatus: text("stripe_connect_onboarding_status"), // pending, active, restricted
   stripeConnectOnboardingLink: text("stripe_connect_onboarding_link"),
+  // Username change tracking (30-day cooldown)
+  lastUsernameChangeAt: integer("last_username_change_at", {
+    mode: "timestamp",
+  }),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
     () => new Date()
   ),

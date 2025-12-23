@@ -4,10 +4,11 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { User, Menu } from "lucide-react"
+import { Menu, User } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { CartDrawer } from "@/components/cart-drawer"
 import { cn } from "@/lib/utils"
+import { SignInButton, SignUpButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs"
 
 export function SiteHeader() {
   const pathname = usePathname()
@@ -98,23 +99,54 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-1 sm:gap-2">
           <CartDrawer />
-          <Button
-            variant="outline"
-            size="sm"
-            className="md:hidden rounded-full font-medium h-8 px-3 text-xs bg-transparent"
-            asChild
-          >
-            <Link href="/auth/signin">Sign In</Link>
-          </Button>
-          <Button variant="ghost" size="icon" className="rounded-full hidden md:flex" asChild>
-            <Link href="/auth/signin">
-              <User className="h-5 w-5" />
-              <span className="sr-only">Account</span>
-            </Link>
-          </Button>
-          <Button asChild className="hidden sm:inline-flex h-10 px-5 rounded-full font-medium">
-            <Link href="/dashboard/listings/new">Start Selling</Link>
-          </Button>
+          <SignedOut>
+            <SignInButton>
+              <Button
+                variant="outline"
+                size="sm"
+                className="md:hidden rounded-full font-medium h-8 px-3 text-xs bg-transparent"
+              >
+                Sign In
+              </Button>
+            </SignInButton>
+            <SignInButton>
+              <Button variant="ghost" size="icon" className="rounded-full hidden md:flex">
+                <User className="h-5 w-5" />
+                <span className="sr-only">Sign In</span>
+              </Button>
+            </SignInButton>
+            <SignUpButton>
+              <Button className="hidden sm:inline-flex h-10 px-5 rounded-full font-medium">
+                Start Selling
+              </Button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <div className="flex items-center gap-1 sm:gap-2">
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "h-9 w-9",
+                    userButtonPopoverCard: "shadow-lg border",
+                    userButtonPopoverActions: "gap-1",
+                    userButtonPopoverActionButton: "rounded-lg",
+                  },
+                }}
+                afterSignOutUrl="/"
+              />
+              <Button
+                variant="default"
+                size="sm"
+                className="md:hidden rounded-full font-medium h-8 px-3 text-xs"
+                asChild
+              >
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
+              <Button variant="default" size="sm" className="hidden md:inline-flex rounded-full font-medium h-10 px-5" asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
+            </div>
+          </SignedIn>
         </div>
       </div>
     </header>
