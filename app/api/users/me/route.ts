@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse, type NextRequest } from "next/server";
 import { db, users } from "@/lib/db";
 import { eq } from "drizzle-orm";
@@ -6,12 +6,25 @@ import { canChangeUsername } from "@/lib/utils/username";
 
 // GET - Get current user profile
 export async function GET() {
-  const { userId } = await auth();
+  const { userId, has } = await auth();
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
+    // Get Clerk user to check subscription using B2C billing
+    const clerk = await clerkClient();
+    const clerkUser = await clerk.users.getUser(userId);
+
+    // Determine subscription tier from Clerk B2C billing
+    // Check plans: vinyl_pro, crate_digger, or default to free_user
+    let subscriptionTier = "free_user";
+    if (has({ plan: "crate_digger" })) {
+      subscriptionTier = "crate_digger";
+    } else if (has({ plan: "vinyl_pro" })) {
+      subscriptionTier = "vinyl_pro";
+    }
+
     // Get the most recent/complete user record if duplicates exist
     // Order by updatedAt to get the most recent one
     const user = await db.query.users.findFirst({
@@ -26,6 +39,7 @@ export async function GET() {
     return NextResponse.json({
       user: {
         ...user,
+        subscriptionTier, // Use Clerk B2C billing subscription tier
         specializedGenres: user.specializedGenres
           ? JSON.parse(user.specializedGenres)
           : [],

@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Lock } from "lucide-react";
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
 
 interface ProtectedAIFeatureProps {
   children: React.ReactNode;
@@ -18,22 +17,15 @@ export function ProtectedAIFeature({
   fallback,
   requiredProducts = ["prod_vinyl_pro", "prod_crate_digger"]
 }: ProtectedAIFeatureProps) {
-  const { userId } = useAuth();
-  
-  // Check user's subscription tier
-  const { data: user } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: async () => {
-      const res = await fetch("/api/users/me");
-      if (!res.ok) throw new Error("Failed to fetch user");
-      const data = await res.json();
-      return data.user;
-    },
-    enabled: !!userId,
-  });
+  const { has } = useAuth();
 
-  // Check if user has required subscription tier
-  const hasAccess = user?.subscriptionTier === "vinyl_pro" || user?.subscriptionTier === "crate_digger";
+  // Check if user has the AI feature or a plan that includes it
+  // Using Clerk B2C billing: check feature 'ai_powered_listing_creation' or plans 'vinyl_pro'/'crate_digger'
+  const hasAccess =
+    (has && has({ feature: "ai_powered_listing_creation" })) ||
+    (has && has({ plan: "vinyl_pro" })) ||
+    (has && has({ plan: "crate_digger" })) ||
+    false;
 
   if (!hasAccess) {
     return fallback || (

@@ -12,6 +12,7 @@ import {
   Bell,
   MessageCircle,
   Disc3,
+  BarChart3,
 } from "lucide-react"
 import Image from "next/image"
 import {
@@ -30,8 +31,10 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { UserButton } from "@clerk/nextjs"
+import { useDashboardCounts } from "@/lib/hooks/use-dashboard-counts"
 
-const menuItems = [
+// Platform category - general platform features
+const platformItems = [
   {
     title: "Overview",
     url: "/dashboard",
@@ -46,19 +49,23 @@ const menuItems = [
     title: "Notifications",
     url: "/dashboard/notifications",
     icon: Bell,
-    badge: 3,
+    showBadge: true,
   },
   {
     title: "Messages",
     url: "/dashboard/messages",
     icon: MessageCircle,
-    badge: 1,
+    showBadge: true,
   },
   {
     title: "Collection",
     url: "/dashboard/collection",
     icon: Disc3,
   },
+]
+
+// Seller category - seller-specific features
+const sellerItems = [
   {
     title: "Listings",
     url: "/dashboard/listings",
@@ -68,6 +75,12 @@ const menuItems = [
     title: "Orders",
     url: "/dashboard/orders",
     icon: ShoppingBag,
+    showBadge: true,
+  },
+  {
+    title: "Analytics",
+    url: "/dashboard/analytics",
+    icon: BarChart3,
   },
   {
     title: "Profile",
@@ -81,8 +94,23 @@ const menuItems = [
   },
 ]
 
+// Quick Actions
+const quickActions = [
+  {
+    title: "New Listing",
+    url: "/dashboard/listings/new",
+    icon: PlusCircle,
+  },
+  {
+    title: "Browse Records",
+    url: "/browse",
+    icon: Search,
+  },
+]
+
 export function AppSidebar() {
   const pathname = usePathname()
+  const { data: counts } = useDashboardCounts()
 
   return (
     <Sidebar>
@@ -105,29 +133,68 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupLabel>Platform</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <Link href={item.url} className="flex items-center justify-between">
-                      <span className="flex items-center gap-2">
-                        <item.icon className="h-4 w-4" />
-                        <span>{item.title}</span>
-                      </span>
-                      {item.badge && (
-                        <Badge
-                          variant="default"
-                          className="h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
-                        >
-                          {item.badge}
-                        </Badge>
-                      )}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {platformItems.map((item) => {
+                const badgeCount =
+                  item.title === "Notifications"
+                    ? counts?.notifications || 0
+                    : item.title === "Messages"
+                      ? counts?.messages || 0
+                      : 0;
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={pathname === item.url}>
+                      <Link href={item.url} className="flex items-center justify-between">
+                        <span className="flex items-center gap-2">
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.title}</span>
+                        </span>
+                        {item.showBadge && badgeCount > 0 && (
+                          <Badge
+                            variant="default"
+                            className="h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
+                          >
+                            {badgeCount}
+                          </Badge>
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Seller</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {sellerItems.map((item) => {
+                const badgeCount =
+                  item.title === "Orders" ? counts?.orders || 0 : 0;
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={pathname === item.url}>
+                      <Link href={item.url} className="flex items-center justify-between">
+                        <span className="flex items-center gap-2">
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.title}</span>
+                        </span>
+                        {item.showBadge && badgeCount > 0 && (
+                          <Badge
+                            variant="default"
+                            className="h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
+                          >
+                            {badgeCount}
+                          </Badge>
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -135,22 +202,16 @@ export function AppSidebar() {
           <SidebarGroupLabel>Quick Actions</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/dashboard/listings/new">
-                    <PlusCircle />
-                    <span>New Listing</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/browse">
-                    <Search />
-                    <span>Browse Records</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              {quickActions.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url}>
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

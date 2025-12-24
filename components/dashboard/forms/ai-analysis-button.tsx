@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Loader2, Sparkles, Lock } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
-import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
@@ -14,20 +13,15 @@ interface AIAnalysisButtonProps {
 }
 
 export function AIAnalysisButton({ onClick, disabled, isAnalyzing }: AIAnalysisButtonProps) {
-  const { userId } = useAuth();
+  const { has } = useAuth();
 
-  const { data: user } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: async () => {
-      const res = await fetch("/api/users/me");
-      if (!res.ok) throw new Error("Failed to fetch user");
-      const data = await res.json();
-      return data.user;
-    },
-    enabled: !!userId,
-  });
-
-  const hasAccess = user?.subscriptionTier === "vinyl_pro" || user?.subscriptionTier === "crate_digger";
+  // Check if user has the AI feature or a plan that includes it
+  // Using Clerk B2C billing: check feature 'ai_powered_listing_creation' or plans 'vinyl_pro'/'crate_digger'
+  const hasAccess =
+    (has && has({ feature: "ai_powered_listing_creation" })) ||
+    (has && has({ plan: "vinyl_pro" })) ||
+    (has && has({ plan: "crate_digger" })) ||
+    false;
 
   if (!hasAccess) {
     return (
