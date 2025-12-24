@@ -9,13 +9,14 @@ import { motion } from "motion/react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs"
 
 const navItems = [
   { href: "/", icon: Home, label: "Home" },
   { href: "/browse", icon: ShoppingBag, label: "Browse" },
   { href: null, icon: Search, label: "Search", featured: true }, // Opens search modal
   { href: "/sellers", icon: User, label: "Sellers" },
-  { href: "/dashboard", icon: User, label: "Account" },
+  { href: "/dashboard", icon: User, label: "Account", showUserButton: true }, // Show UserButton on home page
 ]
 
 export function MobileBottomNav() {
@@ -79,6 +80,41 @@ export function MobileBottomNav() {
                     </div>
                   </SheetContent>
                 </Sheet>
+              )
+            }
+
+            // Show UserButton for Account on home page when signed in
+            if (item.showUserButton && pathname === "/") {
+              return (
+                <div key={item.href} className="flex flex-col items-center justify-center gap-0.5 px-3 py-2 relative min-w-[56px]">
+                  <SignedIn>
+                    <UserButton
+                      appearance={{
+                        elements: {
+                          avatarBox: "h-8 w-8",
+                          userButtonPopoverCard: "shadow-lg border",
+                          userButtonPopoverActions: "gap-1",
+                          userButtonPopoverActionButton: "rounded-lg",
+                        },
+                      }}
+                      afterSignOutUrl="/"
+                    />
+                  </SignedIn>
+                  <SignedOut>
+                    <Link
+                      href={item.href!}
+                      className={cn(
+                        "flex flex-col items-center justify-center gap-0.5",
+                        isActive ? "text-foreground" : "text-muted-foreground",
+                      )}
+                    >
+                      <div className="relative">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <span className="text-[10px] font-medium">{item.label}</span>
+                    </Link>
+                  </SignedOut>
+                </div>
               )
             }
 

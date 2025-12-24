@@ -1,15 +1,18 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Star, MapPin, Calendar, Share2, MoreHorizontal } from "lucide-react";
+import { CheckCircle2, MapPin, Calendar, Share2, MoreHorizontal, UserPlus, UserMinus } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useAuth } from "@clerk/nextjs";
+import { useFollowUser, useUnfollowUser } from "@/lib/hooks/use-follow";
+import { FollowersModal } from "./followers-modal";
+import { FollowingModal } from "./following-modal";
 
 interface SellerProfileProps {
   sellerIdOrUsername: string;
@@ -66,6 +69,32 @@ export function SellerProfile({ sellerIdOrUsername }: SellerProfileProps) {
   const seller = data.seller;
   const isCurrentUser = seller.id === userId;
   const genres = seller.specializedGenres || [];
+  const stats = data.stats || { followers: 0, following: 0 };
+  const isFollowing = data.isFollowing || false;
+  const followsYou = data.followsYou || false;
+
+  const followUser = useFollowUser();
+  const unfollowUser = useUnfollowUser();
+
+  const [optimisticFollowing, setOptimisticFollowing] = useState(isFollowing);
+
+  // Update optimistic state when actual state changes
+  useEffect(() => {
+    setOptimisticFollowing(isFollowing);
+  }, [isFollowing]);
+
+  const [followersModalOpen, setFollowersModalOpen] = useState(false);
+  const [followingModalOpen, setFollowingModalOpen] = useState(false);
+
+  const handleFollowToggle = async () => {
+    if (optimisticFollowing) {
+      setOptimisticFollowing(false);
+      await unfollowUser.mutateAsync(seller.id);
+    } else {
+      setOptimisticFollowing(true);
+      await followUser.mutateAsync(seller.id);
+    }
+  };
 
   return (
     <div className="border-b border-border/40">
@@ -99,8 +128,23 @@ export function SellerProfile({ sellerIdOrUsername }: SellerProfileProps) {
                     <Link href="/dashboard/profile">Edit Profile</Link>
                   </Button>
                 ) : (
-                  <Button variant="default" className="rounded-full px-5 sm:px-6 h-9 sm:h-10 text-sm">
-                    Follow
+                  <Button
+                    variant={optimisticFollowing ? "outline" : "default"}
+                    className="rounded-full px-5 sm:px-6 h-9 sm:h-10 text-sm"
+                    onClick={handleFollowToggle}
+                    disabled={followUser.isPending || unfollowUser.isPending}
+                  >
+                    {optimisticFollowing ? (
+                      <>
+                        <UserMinus className="h-4 w-4 mr-2" />
+                        Unfollow
+                      </>
+                    ) : (
+                      <>
+                        <UserPlus className="h-4 w-4 mr-2" />
+                        Follow
+                      </>
+                    )}
                   </Button>
                 )}
                 <Button variant="outline" size="icon" className="rounded-full bg-transparent h-9 w-9 sm:h-10 sm:w-10">
@@ -121,7 +165,21 @@ export function SellerProfile({ sellerIdOrUsername }: SellerProfileProps) {
             </div>
 
             {/* Stats */}
-            <div className="flex justify-center sm:justify-start gap-6 sm:gap-8">
+            <div className="flex justify-center sm:justify-start gap-4 sm:gap-6 lg:gap-8 flex-wrap">
+              <button
+                onClick={() => setFollowersModalOpen(true)}
+                className="text-center hover:opacity-80 transition-opacity cursor-pointer"
+              >
+                <p className="text-xl sm:text-2xl font-bold">{stats.followers}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Followers</p>
+              </button>
+              <button
+                onClick={() => setFollowingModalOpen(true)}
+                className="text-center hover:opacity-80 transition-opacity cursor-pointer"
+              >
+                <p className="text-xl sm:text-2xl font-bold">{stats.following}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Following</p>
+              </button>
               <div className="text-center">
                 <p className="text-xl sm:text-2xl font-bold">{data.listings?.length || 0}</p>
                 <p className="text-xs sm:text-sm text-muted-foreground">Listings</p>
@@ -131,6 +189,13 @@ export function SellerProfile({ sellerIdOrUsername }: SellerProfileProps) {
                 <p className="text-xs sm:text-sm text-muted-foreground">Collection</p>
               </div>
             </div>
+
+            {/* Follows you indicator */}
+            {followsYou && !isCurrentUser && (
+              <Badge variant="secondary" className="text-xs">
+                Follows you
+              </Badge>
+            )}
 
             {/* Bio */}
             {seller.bio && (
@@ -166,6 +231,16 @@ export function SellerProfile({ sellerIdOrUsername }: SellerProfileProps) {
           </div>
         </div>
       </div>
+      <FollowersModal
+        userId={seller.id}
+        open={followersModalOpen}
+        onOpenChange={setFollowersModalOpen}
+      />
+      <FollowingModal
+        userId={seller.id}
+        open={followingModalOpen}
+        onOpenChange={setFollowingModalOpen}
+      />
     </div>
   );
 }

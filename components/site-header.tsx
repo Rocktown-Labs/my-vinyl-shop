@@ -123,17 +123,20 @@ export function SiteHeader() {
           </SignedOut>
           <SignedIn>
             <div className="flex items-center gap-1 sm:gap-2">
-              <UserButton
-                appearance={{
-                  elements: {
-                    avatarBox: "h-9 w-9",
-                    userButtonPopoverCard: "shadow-lg border",
-                    userButtonPopoverActions: "gap-1",
-                    userButtonPopoverActionButton: "rounded-lg",
-                  },
-                }}
-                afterSignOutUrl="/"
-              />
+              {/* Hide UserButton on mobile when on home page - it's in bottom nav */}
+              <div className={pathname === "/" ? "hidden md:block" : ""}>
+                <UserButton
+                  appearance={{
+                    elements: {
+                      avatarBox: "h-9 w-9",
+                      userButtonPopoverCard: "shadow-lg border",
+                      userButtonPopoverActions: "gap-1",
+                      userButtonPopoverActionButton: "rounded-lg",
+                    },
+                  }}
+                  afterSignOutUrl="/"
+                />
+              </div>
               <Button
                 variant="default"
                 size="sm"

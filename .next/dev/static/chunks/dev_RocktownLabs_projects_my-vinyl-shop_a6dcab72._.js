@@ -1147,7 +1147,7 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
     const hasAccess = user?.subscriptionTier === "vinyl_pro" || user?.subscriptionTier === "crate_digger";
     if (!hasAccess) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "relative",
+            className: "relative group",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                     type: "button",
@@ -1170,7 +1170,7 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "absolute top-full left-0 mt-2 z-10 w-64",
+                    className: "absolute top-full right-0 mt-2 z-50 w-64 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
                         className: "border-amber-200 bg-amber-50/50 shadow-lg",
                         children: [
@@ -1478,7 +1478,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
             condition: initialData?.condition || "",
             sleeveCondition: initialData?.sleeveCondition || "",
             description: initialData?.description || "",
-            recordType: recordType,
+            recordType: recordType || null,
             showPricing: false,
             pricingType: "fixed",
             price: "",
@@ -1505,7 +1505,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                 }
                             }
                         }["VinylForm.useForm[form]"]);
-                        return errors;
+                        return Object.keys(errors).length > 0 ? errors : undefined;
                     }
                     return undefined;
                 }
@@ -1513,6 +1513,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
         },
         onSubmit: {
             "VinylForm.useForm[form]": async ({ value })=>{
+                // Validate images separately
+                if (mode === "collection" && images.length < 2) {
+                    return;
+                }
+                if (mode === "listing") {
+                    if (recordType === "sealed" && images.length < 2) {
+                        return;
+                    }
+                    if (recordType === "used" && images.length < 4) {
+                        return;
+                    }
+                }
                 const formData = new FormData();
                 formData.set("title", value.title);
                 formData.set("artist", value.artist);
@@ -1685,20 +1697,20 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                 children: "What are you selling?"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 280,
+                                lineNumber: 293,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                 children: "This helps us know which images to request"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 281,
+                                lineNumber: 294,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 279,
+                        lineNumber: 292,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1716,7 +1728,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                             children: "2 images required"
                                         }, void 0, false, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 293,
+                                            lineNumber: 306,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1724,7 +1736,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                             children: "New / Sealed"
                                         }, void 0, false, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 294,
+                                            lineNumber: 307,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1732,13 +1744,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                             children: "Factory sealed or brand new"
                                         }, void 0, false, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 295,
+                                            lineNumber: 308,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                    lineNumber: 285,
+                                    lineNumber: 298,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1752,7 +1764,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                             children: "4 images required"
                                         }, void 0, false, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 305,
+                                            lineNumber: 318,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1760,7 +1772,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                             children: "Used / Opened"
                                         }, void 0, false, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 306,
+                                            lineNumber: 319,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1768,30 +1780,30 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                             children: "Previously owned"
                                         }, void 0, false, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 307,
+                                            lineNumber: 320,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                    lineNumber: 297,
+                                    lineNumber: 310,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                            lineNumber: 284,
+                            lineNumber: 297,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 283,
+                        lineNumber: 296,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 278,
+                lineNumber: 291,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1803,20 +1815,20 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                 children: "Images"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 317,
+                                lineNumber: 330,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                 children: mode === "collection" ? `Upload ${minImages}-${maxImages} photos (front and back cover required)` : recordType === "sealed" ? "Upload front and back cover photos" : "Upload cover photos and vinyl disc images"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 318,
+                                lineNumber: 331,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 316,
+                        lineNumber: 329,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1833,7 +1845,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                     children: getImageTypeLabel(index)
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 330,
+                                                    lineNumber: 343,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1845,7 +1857,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             className: "w-full h-full object-cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 332,
+                                                            lineNumber: 345,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1856,24 +1868,24 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 className: "h-4 w-4"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 338,
+                                                                lineNumber: 351,
                                                                 columnNumber: 21
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 333,
+                                                            lineNumber: 346,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 331,
+                                                    lineNumber: 344,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, index, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 329,
+                                            lineNumber: 342,
                                             columnNumber: 15
                                         }, this)),
                                     images.length < maxImages && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -1887,7 +1899,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             children: "Front Cover *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 351,
+                                                            lineNumber: 364,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -1895,13 +1907,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             label: "Front Cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 352,
+                                                            lineNumber: 365,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 350,
+                                                    lineNumber: 363,
                                                     columnNumber: 25
                                                 }, this),
                                                 !images.some((img)=>img.type === "back_cover") && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1912,7 +1924,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             children: "Back Cover *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 360,
+                                                            lineNumber: 373,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -1920,13 +1932,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             label: "Back Cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 361,
+                                                            lineNumber: 374,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 359,
+                                                    lineNumber: 372,
                                                     columnNumber: 25
                                                 }, this)
                                             ]
@@ -1938,7 +1950,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                     children: "Additional Photo"
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 370,
+                                                    lineNumber: 383,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -1946,13 +1958,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                     label: "Add Photo"
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 371,
+                                                    lineNumber: 384,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 369,
+                                            lineNumber: 382,
                                             columnNumber: 21
                                         }, this) : recordType === "sealed" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                                             children: [
@@ -1964,7 +1976,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             children: "Front Cover *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 382,
+                                                            lineNumber: 395,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -1972,13 +1984,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             label: "Front Cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 383,
+                                                            lineNumber: 396,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 381,
+                                                    lineNumber: 394,
                                                     columnNumber: 25
                                                 }, this),
                                                 !images.some((img)=>img.type === "back_cover") && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1989,7 +2001,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             children: "Back Cover *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 391,
+                                                            lineNumber: 404,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -1997,13 +2009,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             label: "Back Cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 392,
+                                                            lineNumber: 405,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 390,
+                                                    lineNumber: 403,
                                                     columnNumber: 25
                                                 }, this)
                                             ]
@@ -2017,7 +2029,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             children: "Front Cover *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 403,
+                                                            lineNumber: 416,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -2025,13 +2037,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             label: "Front Cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 404,
+                                                            lineNumber: 417,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 402,
+                                                    lineNumber: 415,
                                                     columnNumber: 25
                                                 }, this),
                                                 !images.some((img)=>img.type === "back_cover") && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2042,7 +2054,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             children: "Back Cover *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 412,
+                                                            lineNumber: 425,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -2050,13 +2062,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             label: "Back Cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 413,
+                                                            lineNumber: 426,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 411,
+                                                    lineNumber: 424,
                                                     columnNumber: 25
                                                 }, this),
                                                 !images.some((img)=>img.type === "vinyl_front") && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2067,7 +2079,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             children: "Vinyl Side A *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 421,
+                                                            lineNumber: 434,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -2075,13 +2087,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             label: "Vinyl Side A"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 422,
+                                                            lineNumber: 435,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 420,
+                                                    lineNumber: 433,
                                                     columnNumber: 25
                                                 }, this),
                                                 !images.some((img)=>img.type === "vinyl_back") && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2092,7 +2104,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             children: "Vinyl Side B *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 430,
+                                                            lineNumber: 443,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ImageUploadSlot, {
@@ -2100,13 +2112,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                             label: "Vinyl Side B"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                            lineNumber: 431,
+                                                            lineNumber: 444,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                    lineNumber: 429,
+                                                    lineNumber: 442,
                                                     columnNumber: 25
                                                 }, this)
                                             ]
@@ -2115,7 +2127,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 327,
+                                lineNumber: 340,
                                 columnNumber: 11
                             }, this),
                             canProceedToAnalysis() && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2126,24 +2138,24 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                     isAnalyzing: isAnalyzing
                                 }, void 0, false, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                    lineNumber: 446,
+                                    lineNumber: 459,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 445,
+                                lineNumber: 458,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 326,
+                        lineNumber: 339,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 315,
+                lineNumber: 328,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -2154,12 +2166,12 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                             children: "Album Details"
                         }, void 0, false, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                            lineNumber: 459,
+                            lineNumber: 472,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 458,
+                        lineNumber: 471,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -2178,7 +2190,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: "Title *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 466,
+                                                        lineNumber: 479,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2189,7 +2201,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 467,
+                                                        lineNumber: 480,
                                                         columnNumber: 19
                                                     }, this),
                                                     field.state.meta.errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2197,18 +2209,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: typeof field.state.meta.errors[0] === "string" ? field.state.meta.errors[0] : Object.values(field.state.meta.errors[0])[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 475,
+                                                        lineNumber: 488,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 465,
+                                                lineNumber: 478,
                                                 columnNumber: 17
                                             }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 463,
+                                        lineNumber: 476,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2221,7 +2233,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: "Artist *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 488,
+                                                        lineNumber: 501,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2232,7 +2244,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 489,
+                                                        lineNumber: 502,
                                                         columnNumber: 19
                                                     }, this),
                                                     field.state.meta.errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2240,18 +2252,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: typeof field.state.meta.errors[0] === "string" ? field.state.meta.errors[0] : Object.values(field.state.meta.errors[0])[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 497,
+                                                        lineNumber: 510,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 487,
+                                                lineNumber: 500,
                                                 columnNumber: 17
                                             }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 485,
+                                        lineNumber: 498,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2263,7 +2275,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: "Genre *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 510,
+                                                        lineNumber: 523,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -2275,12 +2287,12 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                     placeholder: "Select genre"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                    lineNumber: 516,
+                                                                    lineNumber: 529,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 515,
+                                                                lineNumber: 528,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2289,18 +2301,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                         children: g
                                                                     }, g, false, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 522,
+                                                                        lineNumber: 535,
                                                                         columnNumber: 27
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 518,
+                                                                lineNumber: 531,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 511,
+                                                        lineNumber: 524,
                                                         columnNumber: 19
                                                     }, this),
                                                     field.state.meta.errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2308,18 +2320,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: typeof field.state.meta.errors[0] === "string" ? field.state.meta.errors[0] : Object.values(field.state.meta.errors[0])[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 529,
+                                                        lineNumber: 542,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 509,
+                                                lineNumber: 522,
                                                 columnNumber: 17
                                             }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 507,
+                                        lineNumber: 520,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2332,7 +2344,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: "Year"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 542,
+                                                        lineNumber: 555,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2343,7 +2355,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         onBlur: field.handleBlur
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 543,
+                                                        lineNumber: 556,
                                                         columnNumber: 19
                                                     }, this),
                                                     field.state.meta.errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2351,18 +2363,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: typeof field.state.meta.errors[0] === "string" ? field.state.meta.errors[0] : Object.values(field.state.meta.errors[0])[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 551,
+                                                        lineNumber: 564,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 541,
+                                                lineNumber: 554,
                                                 columnNumber: 17
                                             }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 539,
+                                        lineNumber: 552,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2374,7 +2386,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: "Condition *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 564,
+                                                        lineNumber: 577,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -2386,12 +2398,12 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                     placeholder: "Select condition"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                    lineNumber: 570,
+                                                                    lineNumber: 583,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 569,
+                                                                lineNumber: 582,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2401,18 +2413,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                         children: c.replace("-", " ")
                                                                     }, c, false, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 574,
+                                                                        lineNumber: 587,
                                                                         columnNumber: 25
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 572,
+                                                                lineNumber: 585,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 565,
+                                                        lineNumber: 578,
                                                         columnNumber: 19
                                                     }, this),
                                                     field.state.meta.errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2420,18 +2432,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: typeof field.state.meta.errors[0] === "string" ? field.state.meta.errors[0] : Object.values(field.state.meta.errors[0])[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 581,
+                                                        lineNumber: 594,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 563,
+                                                lineNumber: 576,
                                                 columnNumber: 17
                                             }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 561,
+                                        lineNumber: 574,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2443,7 +2455,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: "Sleeve Condition"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 594,
+                                                        lineNumber: 607,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -2455,12 +2467,12 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                     placeholder: "Select condition"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                    lineNumber: 600,
+                                                                    lineNumber: 613,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 599,
+                                                                lineNumber: 612,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2470,35 +2482,35 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                         children: c.replace("-", " ")
                                                                     }, c, false, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 604,
+                                                                        lineNumber: 617,
                                                                         columnNumber: 25
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 602,
+                                                                lineNumber: 615,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 595,
+                                                        lineNumber: 608,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 593,
+                                                lineNumber: 606,
                                                 columnNumber: 17
                                             }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 591,
+                                        lineNumber: 604,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 462,
+                                lineNumber: 475,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2511,7 +2523,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                 children: "Description"
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 618,
+                                                lineNumber: 631,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -2522,7 +2534,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                 rows: 4
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 619,
+                                                lineNumber: 632,
                                                 columnNumber: 17
                                             }, this),
                                             field.state.meta.errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2530,30 +2542,30 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                 children: field.state.meta.errors[0]
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 627,
+                                                lineNumber: 640,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 617,
+                                        lineNumber: 630,
                                         columnNumber: 15
                                     }, this)
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 615,
+                                lineNumber: 628,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 461,
+                        lineNumber: 474,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 457,
+                lineNumber: 470,
                 columnNumber: 7
             }, this),
             mode === "collection" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -2573,7 +2585,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                 children: "List for Sale"
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 643,
+                                                lineNumber: 656,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2581,13 +2593,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                 children: "Toggle to add pricing and create a listing instead of just adding to collection"
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 646,
+                                                lineNumber: 659,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 642,
+                                        lineNumber: 655,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$switch$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Switch"], {
@@ -2596,28 +2608,28 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                         onCheckedChange: field.handleChange
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 650,
+                                        lineNumber: 663,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 641,
+                                lineNumber: 654,
                                 columnNumber: 17
                             }, this)
                     }, void 0, false, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 639,
+                        lineNumber: 652,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                    lineNumber: 638,
+                    lineNumber: 651,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 637,
+                lineNumber: 650,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Subscribe, {
@@ -2633,12 +2645,12 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                     children: "Pricing"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                    lineNumber: 668,
+                                    lineNumber: 681,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 667,
+                                lineNumber: 680,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -2659,14 +2671,14 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 680,
+                                                                lineNumber: 693,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "Fixed Price"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 674,
+                                                        lineNumber: 687,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2679,25 +2691,25 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 689,
+                                                                lineNumber: 702,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "Auction"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 683,
+                                                        lineNumber: 696,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 673,
+                                                lineNumber: 686,
                                                 columnNumber: 21
                                             }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 671,
+                                        lineNumber: 684,
                                         columnNumber: 17
                                     }, this),
                                     pricingType === "fixed" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2710,7 +2722,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: "Price *"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 700,
+                                                        lineNumber: 713,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2721,7 +2733,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 children: "$"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 702,
+                                                                lineNumber: 715,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2737,13 +2749,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 703,
+                                                                lineNumber: 716,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 701,
+                                                        lineNumber: 714,
                                                         columnNumber: 25
                                                     }, this),
                                                     field.state.meta.errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2751,7 +2763,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         children: field.state.meta.errors[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 717,
+                                                        lineNumber: 730,
                                                         columnNumber: 27
                                                     }, this),
                                                     aiAnalysis && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2764,7 +2776,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 className: "h-3 w-3 mr-1"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 726,
+                                                                lineNumber: 739,
                                                                 columnNumber: 29
                                                             }, this),
                                                             "Use AI suggestion: $",
@@ -2772,18 +2784,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 720,
+                                                        lineNumber: 733,
                                                         columnNumber: 27
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 699,
+                                                lineNumber: 712,
                                                 columnNumber: 23
                                             }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 697,
+                                        lineNumber: 710,
                                         columnNumber: 19
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "space-y-4",
@@ -2798,7 +2810,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 children: "Starting Bid *"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 738,
+                                                                lineNumber: 751,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2809,7 +2821,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                         children: "$"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 740,
+                                                                        lineNumber: 753,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2825,13 +2837,13 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                         required: true
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 741,
+                                                                        lineNumber: 754,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 739,
+                                                                lineNumber: 752,
                                                                 columnNumber: 27
                                                             }, this),
                                                             field.state.meta.errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2839,18 +2851,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 children: field.state.meta.errors[0]
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 755,
+                                                                lineNumber: 768,
                                                                 columnNumber: 29
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 737,
+                                                        lineNumber: 750,
                                                         columnNumber: 25
                                                     }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 735,
+                                                lineNumber: 748,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2864,7 +2876,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 onCheckedChange: field.handleChange
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 764,
+                                                                lineNumber: 777,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
@@ -2872,18 +2884,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 children: "Set Reserve Price"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 769,
+                                                                lineNumber: 782,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 763,
+                                                        lineNumber: 776,
                                                         columnNumber: 25
                                                     }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 761,
+                                                lineNumber: 774,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Subscribe, {
@@ -2898,7 +2910,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                         children: "Reserve Price"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 780,
+                                                                        lineNumber: 793,
                                                                         columnNumber: 33
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2909,7 +2921,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 children: "$"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 782,
+                                                                                lineNumber: 795,
                                                                                 columnNumber: 35
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2924,29 +2936,29 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 placeholder: "0.00"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 785,
+                                                                                lineNumber: 798,
                                                                                 columnNumber: 35
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 781,
+                                                                        lineNumber: 794,
                                                                         columnNumber: 33
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 779,
+                                                                lineNumber: 792,
                                                                 columnNumber: 31
                                                             }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 777,
+                                                        lineNumber: 790,
                                                         columnNumber: 27
                                                     }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 774,
+                                                lineNumber: 787,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -2960,7 +2972,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 onCheckedChange: field.handleChange
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 807,
+                                                                lineNumber: 820,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
@@ -2968,18 +2980,18 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 children: "Enable Buy It Now"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 812,
+                                                                lineNumber: 825,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 806,
+                                                        lineNumber: 819,
                                                         columnNumber: 25
                                                     }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 804,
+                                                lineNumber: 817,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Subscribe, {
@@ -2994,7 +3006,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                         children: "Buy It Now Price"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 823,
+                                                                        lineNumber: 836,
                                                                         columnNumber: 33
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3005,7 +3017,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 children: "$"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 825,
+                                                                                lineNumber: 838,
                                                                                 columnNumber: 35
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3020,29 +3032,29 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 placeholder: "0.00"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 828,
+                                                                                lineNumber: 841,
                                                                                 columnNumber: 35
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 824,
+                                                                        lineNumber: 837,
                                                                         columnNumber: 33
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 822,
+                                                                lineNumber: 835,
                                                                 columnNumber: 31
                                                             }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 820,
+                                                        lineNumber: 833,
                                                         columnNumber: 27
                                                     }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 817,
+                                                lineNumber: 830,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Field, {
@@ -3055,7 +3067,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                 children: "Auction Duration (days)"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 850,
+                                                                lineNumber: 863,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -3065,12 +3077,12 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                            lineNumber: 856,
+                                                                            lineNumber: 869,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 855,
+                                                                        lineNumber: 868,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -3080,7 +3092,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 children: "3 days"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 859,
+                                                                                lineNumber: 872,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3088,7 +3100,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 children: "5 days"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 860,
+                                                                                lineNumber: 873,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3096,7 +3108,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 children: "7 days"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 861,
+                                                                                lineNumber: 874,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3104,7 +3116,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 children: "10 days"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 862,
+                                                                                lineNumber: 875,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -3112,53 +3124,53 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                                                                 children: "14 days"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                                lineNumber: 863,
+                                                                                lineNumber: 876,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                        lineNumber: 858,
+                                                                        lineNumber: 871,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                                lineNumber: 851,
+                                                                lineNumber: 864,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                        lineNumber: 849,
+                                                        lineNumber: 862,
                                                         columnNumber: 25
                                                     }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                                lineNumber: 847,
+                                                lineNumber: 860,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                        lineNumber: 734,
+                                        lineNumber: 747,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 670,
+                                lineNumber: 683,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 666,
+                        lineNumber: 679,
                         columnNumber: 13
                     }, this)
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 663,
+                lineNumber: 676,
                 columnNumber: 7
             }, this),
             state?.error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3166,7 +3178,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                 children: state.error
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 878,
+                lineNumber: 891,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(form.Subscribe, {
@@ -3185,7 +3197,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                 children: "Cancel"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 884,
+                                lineNumber: 897,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3198,7 +3210,7 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                             className: "h-4 w-4 mr-2 animate-spin"
                                         }, void 0, false, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                            lineNumber: 890,
+                                            lineNumber: 903,
                                             columnNumber: 19
                                         }, this),
                                         mode === "listing" || mode === "collection" && showPricing ? "Creating..." : "Adding..."
@@ -3206,24 +3218,24 @@ function VinylForm({ mode = "collection", initialData, onSuccess }) {
                                 }, void 0, true) : mode === "listing" || mode === "collection" && showPricing ? "Create Listing" : "Add to Collection"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                                lineNumber: 887,
+                                lineNumber: 900,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 883,
+                        lineNumber: 896,
                         columnNumber: 11
                     }, this)
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 881,
+                lineNumber: 894,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-        lineNumber: 268,
+        lineNumber: 281,
         columnNumber: 5
     }, this);
 }
@@ -3253,7 +3265,7 @@ function ImageUploadSlot({ onUpload, label }) {
                         className: "h-8 w-8 mb-2"
                     }, void 0, false, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 919,
+                        lineNumber: 932,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3261,13 +3273,13 @@ function ImageUploadSlot({ onUpload, label }) {
                         children: label
                     }, void 0, false, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                        lineNumber: 920,
+                        lineNumber: 933,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 918,
+                lineNumber: 931,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -3277,13 +3289,13 @@ function ImageUploadSlot({ onUpload, label }) {
                 className: "absolute inset-0 opacity-0 cursor-pointer"
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-                lineNumber: 922,
+                lineNumber: 935,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/vinyl-form.tsx",
-        lineNumber: 917,
+        lineNumber: 930,
         columnNumber: 5
     }, this);
 }

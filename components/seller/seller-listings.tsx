@@ -6,13 +6,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Package, Grid3x3, LayoutList } from "lucide-react";
+import { Package, Grid3x3, LayoutList, Disc, Loader2, Lock } from "lucide-react";
 import { VinylCard } from "@/components/vinyl-card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import type { Vinyl } from "@/lib/db/schema";
+import { useSellerCollection } from "@/lib/hooks/use-collection";
+import { dbVinylToCardFormat } from "@/lib/utils/vinyl";
 
 interface SellerListingsProps {
   sellerId: string;
@@ -36,6 +38,15 @@ export function SellerListings({ sellerId }: SellerListingsProps) {
   // Get seller ID from data (in case we looked up by username)
   const actualSellerId = data?.seller?.id || sellerId;
 
+  // Get collection data with infinite query (use actual seller ID)
+  const {
+    data: collectionData,
+    isLoading: isLoadingCollection,
+    fetchNextPage: fetchNextCollectionPage,
+    hasNextPage: hasMoreCollection,
+    isFetchingNextPage: isFetchingMoreCollection,
+  } = useSellerCollection(actualSellerId);
+
   if (isLoading) {
     return (
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -58,6 +69,11 @@ export function SellerListings({ sellerId }: SellerListingsProps) {
   }
 
   const listings = (data?.listings || []) as Vinyl[];
+  const collectionCount = data?.collection?.length || 0;
+
+  const allCollectionItems =
+    collectionData?.pages.flatMap((page) => page.collection) || [];
+  const totalCollectionCount = collectionData?.pages[0]?.pagination.total || collectionCount;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -70,6 +86,13 @@ export function SellerListings({ sellerId }: SellerListingsProps) {
             >
               <Package className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
               Active ({listings.length})
+            </TabsTrigger>
+            <TabsTrigger
+              value="collection"
+              className="bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-4 pt-0 rounded-none border-b-2 border-transparent data-[state=active]:border-foreground font-medium text-xs sm:text-sm whitespace-nowrap"
+            >
+              <Disc className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
+              Collection ({totalCollectionCount})
             </TabsTrigger>
             <TabsTrigger
               value="sold"
@@ -114,9 +137,18 @@ export function SellerListings({ sellerId }: SellerListingsProps) {
             </div>
           ) : viewMode === "grid" ? (
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
-              {listings.map((vinyl) => (
-                <VinylCard key={vinyl.id} vinyl={vinyl} />
-              ))}
+              {listings.map((vinyl) => {
+                const vinylWithImages = {
+                  ...vinyl,
+                  images: typeof vinyl.images === "string" ? JSON.parse(vinyl.images) : vinyl.images || [],
+                };
+                return (
+                  <VinylCard
+                    key={vinyl.id}
+                    vinyl={dbVinylToCardFormat(vinylWithImages as any)}
+                  />
+                );
+              })}
             </div>
           ) : (
             <Card className="border-0 shadow-sm overflow-hidden">
@@ -172,6 +204,60 @@ export function SellerListings({ sellerId }: SellerListingsProps) {
                 </TableBody>
               </Table>
             </Card>
+          )}
+        </TabsContent>
+
+        <TabsContent value="collection" className="mt-0">
+          {isLoadingCollection ? (
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton key={i} className="aspect-square rounded-xl" />
+              ))}
+            </div>
+          ) : allCollectionItems.length === 0 ? (
+            <div className="text-center py-16 sm:py-20">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <Disc className="h-6 w-6 sm:h-8 sm:w-8 text-muted-foreground" />
+              </div>
+              <p className="text-sm sm:text-base text-muted-foreground mb-2">
+                {data?.seller?.collectionPrivacy === "private"
+                  ? "Collection is private"
+                  : "No collection items"}
+              </p>
+              {data?.seller?.collectionPrivacy === "private" && (
+                <Lock className="h-4 w-4 text-muted-foreground mx-auto" />
+              )}
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+                {allCollectionItems.map((vinyl) => (
+                  <VinylCard
+                    key={vinyl.id}
+                    vinyl={dbVinylToCardFormat(vinyl as any)}
+                  />
+                ))}
+              </div>
+              {hasMoreCollection && (
+                <div className="flex justify-center mt-8 sm:mt-12">
+                  <Button
+                    onClick={() => fetchNextCollectionPage()}
+                    disabled={isFetchingMoreCollection}
+                    variant="outline"
+                    className="rounded-full"
+                  >
+                    {isFetchingMoreCollection ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Loading...
+                      </>
+                    ) : (
+                      "Load More"
+                    )}
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </TabsContent>
 

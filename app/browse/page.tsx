@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { useSearchParams } from "next/navigation"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
@@ -13,11 +13,14 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { Filter, X, ChevronDown } from "lucide-react"
-import { mockVinyls, genres, conditions } from "@/lib/mock-data"
+import { Filter, X, ChevronDown, Loader2 } from "lucide-react"
+import { genres, conditions } from "@/lib/mock-data"
 import { VinylCard } from "@/components/vinyl-card"
 import { motion, AnimatePresence } from "motion/react"
 import { Badge } from "@/components/ui/badge"
+import { useBrowseVinyls } from "@/lib/hooks/use-browse"
+import { dbVinylToCardFormat } from "@/lib/utils/vinyl"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const sortOptions = [
   { name: "Most Popular", value: "popular" },
@@ -106,12 +109,45 @@ export default function BrowsePage() {
 
   const activeFiltersCount = Object.values(selectedFilters).flat().length
 
-  const filteredVinyls = mockVinyls.filter((vinyl) => {
-    if (selectedFilters.genre.length > 0 && !selectedFilters.genre.includes(vinyl.genre.toLowerCase())) return false
-    if (selectedFilters.condition.length > 0 && !selectedFilters.condition.includes(vinyl.condition)) return false
-    if (vinyl.price < priceRange[0] || vinyl.price > priceRange[1]) return false
-    return true
-  })
+  // Build filters for API
+  const apiFilters = useMemo(() => {
+    const filters: Parameters<typeof useBrowseVinyls>[0] = {
+      sort: sortBy,
+      minPrice: priceRange[0] > 0 ? priceRange[0] : undefined,
+      maxPrice: priceRange[1] < 100 ? priceRange[1] : undefined,
+    };
+
+    if (selectedFilters.genre.length > 0) {
+      // Take first genre, capitalize to match DB format
+      filters.genre = selectedFilters.genre[0];
+    }
+
+    if (selectedFilters.condition.length > 0) {
+      // Take first condition
+      filters.condition = selectedFilters.condition[0];
+    }
+
+    if (selectedFilters.year.length > 0) {
+      filters.year = selectedFilters.year[0];
+    }
+
+    const searchParam = searchParams.get("search");
+    if (searchParam) {
+      filters.search = searchParam;
+    }
+
+    return filters;
+  }, [selectedFilters, priceRange, sortBy, searchParams]);
+
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useBrowseVinyls(apiFilters);
+
+  // Flatten all pages of results
+  const allVinyls = useMemo(() => {
+    if (!data?.pages) return [];
+    return data.pages.flatMap((page) => page.vinyls);
+  }, [data]);
+
+  const totalCount = data?.pages[0]?.pagination.total || 0;
 
   const MobileFilterContent = () => (
     <div className="space-y-0 px-1">
@@ -318,25 +354,62 @@ export default function BrowsePage() {
           {/* Results count */}
           <div className="flex items-center justify-between mb-6">
             <p className="text-sm text-muted-foreground">
-              {filteredVinyls.length} {filteredVinyls.length === 1 ? "record" : "records"}
+              {isLoading ? (
+                <Skeleton className="h-4 w-32" />
+              ) : (
+                <>
+                  {totalCount} {totalCount === 1 ? "record" : "records"}
+                </>
+              )}
             </p>
           </div>
 
           {/* Product Grid */}
-          {filteredVinyls.length > 0 ? (
-            <motion.div layout className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-              {filteredVinyls.map((vinyl, index) => (
-                <motion.div
-                  key={vinyl.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.03 }}
-                >
-                  <VinylCard vinyl={vinyl} />
-                </motion.div>
+          {isLoading ? (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="space-y-3">
+                  <Skeleton className="aspect-square rounded-xl" />
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-3 w-1/2" />
+                </div>
               ))}
-            </motion.div>
+            </div>
+          ) : allVinyls.length > 0 ? (
+            <>
+              <motion.div layout className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+                {allVinyls.map((vinyl, index) => (
+                  <motion.div
+                    key={vinyl.id}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.5) }}
+                  >
+                    <VinylCard vinyl={dbVinylToCardFormat(vinyl as any)} />
+                  </motion.div>
+                ))}
+              </motion.div>
+              {hasNextPage && (
+                <div className="flex justify-center mt-8 sm:mt-12">
+                  <Button
+                    onClick={() => fetchNextPage()}
+                    disabled={isFetchingNextPage}
+                    variant="outline"
+                    className="rounded-full"
+                  >
+                    {isFetchingNextPage ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Loading...
+                      </>
+                    ) : (
+                      "Load More"
+                    )}
+                  </Button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-16 sm:py-24">
               <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4 sm:mb-6">

@@ -17,7 +17,7 @@ export function getStripeClient(): Stripe {
   }
 
   return new Stripe(apiKey, {
-    apiVersion: "2024-12-18.acacia",
+    apiVersion: "2025-12-15.clover",
   });
 }
 

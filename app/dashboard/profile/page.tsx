@@ -1,4 +1,6 @@
 import { ProfileForm } from "@/components/dashboard/forms/profile-form";
+import { Suspense } from "react";
+import ProfileLoading from "./loading";
 
 export default function ProfilePage() {
   return (
@@ -9,7 +11,9 @@ export default function ProfilePage() {
           Manage your seller profile and information
         </p>
       </div>
-      <ProfileForm />
+      <Suspense fallback={<ProfileLoading/>}>
+        <ProfileForm />
+      </Suspense>
     </div>
   );
 }

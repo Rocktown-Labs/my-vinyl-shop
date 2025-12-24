@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, use } from "react"
 import { useRouter } from "next/navigation"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
@@ -17,9 +17,9 @@ import { mockVinyls, mockSellers } from "@/lib/mock-data"
 import { VinylCard } from "@/components/vinyl-card"
 import { motion, AnimatePresence } from "motion/react"
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
-  const { id } = params
+  const { id } = use(params)
   const vinyl = mockVinyls.find((v) => v.id === id)
   const seller = vinyl ? mockSellers.find((s) => s.id === vinyl.sellerId) : null
   const relatedVinyls = mockVinyls.filter((v) => v.genre === vinyl?.genre && v.id !== id).slice(0, 4)

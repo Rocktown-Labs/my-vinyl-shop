@@ -1,5 +1,34 @@
-import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
-import { relations } from "drizzle-orm";
+import {
+  sqliteTable,
+  text,
+  integer,
+  real,
+  customType,
+} from "drizzle-orm/sqlite-core";
+import { relations, sql } from "drizzle-orm";
+
+// Custom vector type for Turso F32_BLOB
+// Google embedding-001 model produces 768-dimensional vectors
+const EMBEDDING_DIMENSIONS = 768;
+
+const float32Array = customType<{
+  data: number[];
+  config: { dimensions: number };
+  configRequired: true;
+  driverData: Buffer;
+}>({
+  dataType(config) {
+    return `F32_BLOB(${config.dimensions})`;
+  },
+  fromDriver(value: Buffer) {
+    return Array.from(new Float32Array(value.buffer));
+  },
+  toDriver(value: number[]) {
+    // Return the array as-is; we'll use raw SQL with vector32() function when inserting
+    // This is a workaround since Drizzle doesn't support SQL functions in toDriver
+    return Buffer.from(new Float32Array(value).buffer);
+  },
+});
 
 // Users table - extends Clerk user data
 export const users = sqliteTable("users", {
@@ -33,6 +62,10 @@ export const users = sqliteTable("users", {
   lastUsernameChangeAt: integer("last_username_change_at", {
     mode: "timestamp",
   }),
+  // Collection privacy setting
+  collectionPrivacy: text("collection_privacy").default("public"), // public, private
+  // Vector embedding for search (768 dimensions for Google embedding-001)
+  embedding: float32Array("embedding", { dimensions: EMBEDDING_DIMENSIONS }),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
     () => new Date()
   ),
@@ -84,6 +117,9 @@ export const vinyls = sqliteTable("vinyls", {
   // AI-generated data
   aiSuggestedPrice: real("ai_suggested_price"),
   aiConditionNotes: text("ai_condition_notes"),
+
+  // Vector embedding for search (768 dimensions for Google embedding-001)
+  embedding: float32Array("embedding", { dimensions: EMBEDDING_DIMENSIONS }),
 
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
     () => new Date()

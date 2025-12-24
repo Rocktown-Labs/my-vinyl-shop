@@ -1,4 +1,6 @@
 import { OrdersTable } from "@/components/dashboard/orders-table";
+import { Suspense } from "react";
+import OrdersLoading from "./loading";
 
 export default function OrdersPage() {
   return (
@@ -9,7 +11,9 @@ export default function OrdersPage() {
           Manage and track your sales
         </p>
       </div>
-      <OrdersTable />
+      <Suspense fallback={<OrdersLoading />}>
+        <OrdersTable />
+      </Suspense>
     </div>
   );
 }

@@ -19,7 +19,7 @@ export interface SearchResult {
  */
 async function generateEmbedding(text: string): Promise<number[]> {
   const { embedding } = await embed({
-    model: google.embedding("models/embedding-001"),
+    model: google.textEmbedding("models/embedding-001"),
     value: text,
   });
   return embedding;
@@ -37,11 +37,10 @@ export async function searchVinyls(
 
     // Generate embedding for the query
     const queryEmbedding = await generateEmbedding(query);
-    const embeddingStr = `[${queryEmbedding.join(",")}]`;
 
     // Use TursoDB's vector_top_k function for similarity search
     // Note: This requires a vector index to be created on the vinyls table
-    const results = await db.execute(sql`
+    const results = await db.all(sql`
       SELECT 
         v.id,
         v.title,
@@ -53,12 +52,12 @@ export async function searchVinyls(
         v.images,
         v.user_id,
         u.display_name as seller_name,
-        vector_top_k('vinyls_idx', vector32(${embeddingStr}), ${limit}) as similarity
-      FROM vector_top_k('vinyls_idx', vector32(${embeddingStr}), ${limit}) vt
+        vt.distance
+      FROM vector_top_k('vinyls_idx', vector32(${JSON.stringify(queryEmbedding)}), ${limit}) vt
       JOIN vinyls v ON v.rowid = vt.id
       JOIN users u ON u.id = v.user_id
       WHERE v.is_listed = 1
-      ORDER BY similarity DESC
+      ORDER BY vt.distance ASC
       LIMIT ${limit}
     `);
 
@@ -77,7 +76,7 @@ export async function searchVinyls(
           sellerId: row.user_id,
           sellerName: row.seller_name,
         },
-        score: row.similarity,
+        score: 1 - (row.distance || 0), // Convert distance to similarity (1 - distance)
       };
     });
   } catch (error) {
@@ -97,7 +96,7 @@ async function fallbackTextSearch(
   const limit = options?.limit || 20;
   const searchTerm = `%${query}%`;
 
-  const results = await db.execute(sql`
+  const results = await db.all(sql`
     SELECT 
       v.id,
       v.title,
@@ -149,9 +148,8 @@ export async function searchSellers(
   try {
     const limit = options?.limit || 20;
     const queryEmbedding = await generateEmbedding(query);
-    const embeddingStr = `[${queryEmbedding.join(",")}]`;
 
-    const results = await db.execute(sql`
+    const results = await db.all(sql`
       SELECT 
         u.id,
         u.display_name,
@@ -160,11 +158,11 @@ export async function searchSellers(
         u.avatar_url,
         u.country,
         u.specialized_genres,
-        vector_top_k('sellers_idx', vector32(${embeddingStr}), ${limit}) as similarity
-      FROM vector_top_k('sellers_idx', vector32(${embeddingStr}), ${limit}) st
+        st.distance
+      FROM vector_top_k('users_idx', vector32(${JSON.stringify(queryEmbedding)}), ${limit}) st
       JOIN users u ON u.rowid = st.id
       WHERE u.is_seller = 1 AND u.onboarding_completed = 1
-      ORDER BY similarity DESC
+      ORDER BY st.distance ASC
       LIMIT ${limit}
     `);
 
@@ -183,7 +181,7 @@ export async function searchSellers(
           country: row.country,
           genres,
         },
-        score: row.similarity,
+        score: 1 - (row.distance || 0), // Convert distance to similarity (1 - distance)
       };
     });
   } catch (error) {
@@ -202,7 +200,7 @@ async function fallbackSellerSearch(
   const limit = options?.limit || 20;
   const searchTerm = `%${query}%`;
 
-  const results = await db.execute(sql`
+  const results = await db.all(sql`
     SELECT 
       u.id,
       u.display_name,
