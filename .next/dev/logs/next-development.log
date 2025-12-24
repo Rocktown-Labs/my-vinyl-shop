@@ -1429,3 +1429,225 @@ Import traces:
 [03:21:45.568] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600480423}
 [03:22:09.999] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
 [03:22:09.999] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600504862}
+[03:25:11.744] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/collection color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/collection","o":"http://localhost:3000/dashboard/collection","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600686609}
+[03:25:14.234] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/collection/add color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/collection/add","o":"http://localhost:3000/dashboard/collection/add","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600689099}
+[03:25:23.401] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings","o":"http://localhost:3000/dashboard/listings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600698267}
+[03:25:25.093] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600699958}
+[03:25:46.958] Server  LOG      ✓ Compiled in 538ms
+[03:25:47.122] Browser ERROR   uncaughtError: ReferenceError: menuItems is not defined
+[03:25:48.168] Server  ERROR    ⨯ ReferenceError: menuItems is not defined
+[03:25:48.295] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:25:48.496] Browser ERROR   uncaughtError: ReferenceError: menuItems is not defined
+[03:25:48.626] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:25:52.301] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:25:52.324] Server  LOG      ✓ Compiled in 99ms
+[03:25:53.230] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:25:53.542] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[03:25:53.542] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <div className="grid gap-4...">
+      <APIField>
+      <APIField>
+      ...
+        <SelectCollectionProvider scope={undefined}>
+          <SelectCollectionProviderProvider scope={undefined} itemMap={Map} collectionRef={{current:null}}>
+            <SelectProvider scope={undefined} onNativeOptionAdd={function Select.useCallback} ...>
+              <SelectTrigger>
+                <SelectTrigger data-slot="select-tri..." data-size="default" className={"border-i..."}>
+                  <PopperAnchor asChild={true} __scopePopper={{Popper:[...]}}>
+                    <Primitive.div asChild={true} ref={function}>
+                      <Slot ref={function}>
+                        <SlotClone ref={function}>
+                          <Primitive.button type="button" role="combobox" aria-controls="radix-_R_2..." ...>
+                            <button
+                              type="button"
+                              role="combobox"
++                             aria-controls="radix-_R_2djur5esnebnabn7lb_"
+-                             aria-controls="radix-_R_9mfrclritpetabn7lb_"
+                              aria-expanded={false}
+                              aria-required={undefined}
+                              aria-autocomplete="none"
+                              dir="ltr"
+                              data-state="closed"
+                              disabled={false}
+                              data-disabled={undefined}
+                              data-placeholder=""
+                              data-slot="select-trigger"
+                              data-size="default"
+                              className={"border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='t..."}
+                              onClick={function handleEvent}
+                              onPointerDown={function handleEvent}
+                              onKeyDown={function handleEvent}
+                              ref={function}
+                            >
+              ...
+        ...
+      <APIField>
+      ...
+        <SelectCollectionProvider scope={undefined}>
+          <SelectCollectionProviderProvider scope={undefined} itemMap={Map} collectionRef={{current:null}}>
+            <SelectProvider scope={undefined} onNativeOptionAdd={function Select.useCallback} ...>
+              <SelectTrigger>
+                <SelectTrigger data-slot="select-tri..." data-size="default" className={"border-i..."}>
+                  <PopperAnchor asChild={true} __scopePopper={{Popper:[...]}}>
+                    <Primitive.div asChild={true} ref={function}>
+                      <Slot ref={function}>
+                        <SlotClone ref={function}>
+                          <Primitive.button type="button" role="combobox" aria-controls="radix-_R_2..." ...>
+                            <button
+                              type="button"
+                              role="combobox"
++                             aria-controls="radix-_R_2ljur5esnebnabn7lb_"
+-                             aria-controls="radix-_R_amfrclritpetabn7lb_"
+                              aria-expanded={false}
+                              aria-required={undefined}
+                              aria-autocomplete="none"
+                              dir="ltr"
+                              data-state="closed"
+                              disabled={false}
+                              data-disabled={undefined}
+                              data-placeholder=""
+                              data-slot="select-trigger"
+                              data-size="default"
+                              className={"border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='t..."}
+                              onClick={function handleEvent}
+                              onPointerDown={function handleEvent}
+                              onKeyDown={function handleEvent}
+                              ref={function}
+                            >
+              ...
+        ...
+      ...
+        <SelectCollectionProvider scope={undefined}>
+          <SelectCollectionProviderProvider scope={undefined} itemMap={Map} collectionRef={{current:null}}>
+            <SelectProvider scope={undefined} onNativeOptionAdd={function Select.useCallback} ...>
+              <SelectTrigger>
+                <SelectTrigger data-slot="select-tri..." data-size="default" className={"border-i..."}>
+                  <PopperAnchor asChild={true} __scopePopper={{Popper:[...]}}>
+                    <Primitive.div asChild={true} ref={function}>
+                      <Slot ref={function}>
+                        <SlotClone ref={function}>
+                          <Primitive.button type="button" role="combobox" aria-controls="radix-_R_2..." ...>
+                            <button
+                              type="button"
+                              role="combobox"
++                             aria-controls="radix-_R_2pjur5esnebnabn7lb_"
+-                             aria-controls="radix-_R_b6frclritpetabn7lb_"
+                              aria-expanded={false}
+                              aria-required={undefined}
+                              aria-autocomplete="none"
+                              dir="ltr"
+                              data-state="closed"
+                              disabled={false}
+                              data-disabled={undefined}
+                              data-placeholder=""
+                              data-slot="select-trigger"
+                              data-size="default"
+                              className={"border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='t..."}
+                              onClick={function handleEvent}
+                              onPointerDown={function handleEvent}
+                              onKeyDown={function handleEvent}
+                              ref={function}
+                            >
+              ...
+        ...
+
+[03:25:53.542] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:25:53.542] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/listings/new","route":"/dashboard/listings/new"}
+[03:25:53.542] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600728351}
+[03:25:53.542] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:26:52.449] Server  LOG      ✓ Compiled in 124ms
+[03:27:46.938] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/notifications color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/notifications","o":"http://localhost:3000/dashboard/notifications","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600841788}
+[03:27:50.968] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/messages color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/messages","o":"http://localhost:3000/dashboard/messages","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600845831}
+[03:28:27.440] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/analytics color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/analytics","o":"http://localhost:3000/dashboard/analytics","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600882270}
+[03:29:35.541] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/feed color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/feed","o":"http://localhost:3000/dashboard/feed","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600950401}
+[03:29:37.624] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/notifications color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/notifications","o":"http://localhost:3000/dashboard/notifications","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600952487}
+[03:29:39.211] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/messages color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/messages","o":"http://localhost:3000/dashboard/messages","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600954073}
+[03:30:18.842] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600993703}
+[03:30:20.196] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/feed color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/feed","o":"http://localhost:3000/dashboard/feed","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600995055}
+[03:30:23.833] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/analytics color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/analytics","o":"http://localhost:3000/dashboard/analytics","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600998694}
+[03:30:29.782] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601004636}
+[03:30:51.947] Server  LOG      ✓ Compiled in 382ms
+[03:30:52.490] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:30:52.738] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:30:52.738] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:30:52.738] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:30:52.738] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601027600}
+[03:31:44.040] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[03:31:44.040] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601078893}
+[03:31:46.737] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings","o":"http://localhost:3000/dashboard/listings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601081595}
+[03:31:49.008] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601083868}
+[03:31:55.560] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:31:55.735] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[03:31:55.947] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:31:55.947] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:31:55.947] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/listings/new","route":"/dashboard/listings/new"}
+[03:31:55.947] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601090808}
+[03:32:00.028] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings","o":"http://localhost:3000/dashboard/listings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601094889}
+[03:32:01.660] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/orders color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/orders","o":"http://localhost:3000/dashboard/orders","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601096521}
+[03:32:03.606] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/feed color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/feed","o":"http://localhost:3000/dashboard/feed","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601098466}
+[03:32:05.037] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/collection color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/collection","o":"http://localhost:3000/dashboard/collection","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601099899}
+[03:32:06.984] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601101842}
+[03:32:10.586] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/profile color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/profile","o":"http://localhost:3000/dashboard/profile","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601105447}
+[03:32:16.734] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/analytics color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/analytics","o":"http://localhost:3000/dashboard/analytics","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601111595}
+[03:32:20.432] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601115292}
+[03:32:21.783] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/feed color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/feed","o":"http://localhost:3000/dashboard/feed","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601116642}
+[03:32:23.156] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/notifications color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/notifications","o":"http://localhost:3000/dashboard/notifications","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601118014}
+[03:32:25.748] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/messages color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/messages","o":"http://localhost:3000/dashboard/messages","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601120609}
+[03:32:27.475] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/collection color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/collection","o":"http://localhost:3000/dashboard/collection","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601122330}
+[03:32:30.878] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/collection/add color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/collection/add","o":"http://localhost:3000/dashboard/collection/add","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601125739}
+[03:33:06.732] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:33:06.930] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[03:33:07.038] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:33:07.038] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/collection/add","route":"/dashboard/collection/add"}
+[03:33:07.038] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/collection/add color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/collection/add","o":"http://localhost:3000/dashboard/collection/add","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601161899}
+[03:33:07.148] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:33:08.415] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings","o":"http://localhost:3000/dashboard/listings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601163276}
+[03:33:10.438] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766601165298}
+[03:40:15.027] Server  LOG      ✓ Compiled in 150ms
+[03:40:34.685] Server  LOG      ✓ Compiled in 44ms
+[03:49:35.372] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:49:35.558] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[03:49:35.787] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:49:35.787] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/listings/new","route":"/dashboard/listings/new"}
+[03:49:35.787] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602150652}
+[03:49:35.787] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:49:40.570] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602155455}
+[03:49:43.632] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/feed color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/feed","o":"http://localhost:3000/dashboard/feed","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602158516}
+[03:49:46.686] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602161572}
+[03:49:48.594] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602163448}
+[03:49:56.755] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602171642}
+[03:50:07.223] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/collection color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/collection","o":"http://localhost:3000/dashboard/collection","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602182109}
+[03:50:08.522] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/messages color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/messages","o":"http://localhost:3000/dashboard/messages","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602183407}
+[03:50:09.868] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/notifications color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/notifications","o":"http://localhost:3000/dashboard/notifications","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602184754}
+[03:50:11.239] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/orders color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/orders","o":"http://localhost:3000/dashboard/orders","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602186124}
+[03:50:12.256] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings","o":"http://localhost:3000/dashboard/listings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602187142}
+[03:50:15.233] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602190089}
+[03:52:55.511] Server  LOG        Reload env: .env.local
+[03:54:39.392] Server  LOG        Reload env: .env.local
+[03:55:51.924] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:55:52.135] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[03:55:52.135] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:55:52.325] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:55:52.325] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard/listings/new","route":"/dashboard/listings/new"}
+[03:55:52.325] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602527207}
+[03:55:58.681] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602533565}
+[03:56:01.693] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/notifications color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/notifications","o":"http://localhost:3000/dashboard/notifications","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602536579}
+[03:56:03.950] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings","o":"http://localhost:3000/dashboard/listings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602538835}
+[03:56:06.238] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/orders color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/orders","o":"http://localhost:3000/dashboard/orders","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602541122}
+[03:56:07.789] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/analytics color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/analytics","o":"http://localhost:3000/dashboard/analytics","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602542674}
+[03:56:10.605] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/profile color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/profile","o":"http://localhost:3000/dashboard/profile","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602545490}
+[03:56:13.706] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602548591}
+[03:56:15.110] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings","o":"http://localhost:3000/dashboard/listings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602549995}
+[03:56:17.664] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings/new color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings/new","o":"http://localhost:3000/dashboard/listings/new","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766602552524}

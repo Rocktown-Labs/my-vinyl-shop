@@ -20,6 +20,12 @@
           "exportedName": "formatMetadataHeaders",
           "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js"
         },
+        "app/dashboard/analytics/page": {
+          "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/analytics/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "formatMetadataHeaders",
+          "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js"
+        },
         "app/dashboard/collection/add/page": {
           "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/collection/add/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/lib/actions/vinyls.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
@@ -121,6 +127,7 @@
         "app/auth/signup/[[...signup]]/page": "rsc",
         "app/browse/page": "rsc",
         "app/checkout/page": "rsc",
+        "app/dashboard/analytics/page": "rsc",
         "app/dashboard/collection/add/page": "rsc",
         "app/dashboard/collection/page": "rsc",
         "app/dashboard/feed/page": "rsc",
@@ -161,6 +168,12 @@
           "exportedName": "collectKeylessMetadata",
           "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js"
         },
+        "app/dashboard/analytics/page": {
+          "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/analytics/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "collectKeylessMetadata",
+          "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js"
+        },
         "app/dashboard/collection/add/page": {
           "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/collection/add/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/lib/actions/vinyls.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
@@ -262,6 +275,7 @@
         "app/auth/signup/[[...signup]]/page": "rsc",
         "app/browse/page": "rsc",
         "app/checkout/page": "rsc",
+        "app/dashboard/analytics/page": "rsc",
         "app/dashboard/collection/add/page": "rsc",
         "app/dashboard/collection/page": "rsc",
         "app/dashboard/feed/page": "rsc",
@@ -302,6 +316,12 @@
           "exportedName": "createOrReadKeylessAction",
           "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
         },
+        "app/dashboard/analytics/page": {
+          "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/analytics/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createOrReadKeylessAction",
+          "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
+        },
         "app/dashboard/collection/add/page": {
           "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/collection/add/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/lib/actions/vinyls.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
@@ -403,6 +423,7 @@
         "app/auth/signup/[[...signup]]/page": "action-browser",
         "app/browse/page": "action-browser",
         "app/checkout/page": "action-browser",
+        "app/dashboard/analytics/page": "action-browser",
         "app/dashboard/collection/add/page": "action-browser",
         "app/dashboard/collection/page": "action-browser",
         "app/dashboard/feed/page": "action-browser",
@@ -443,6 +464,12 @@
           "exportedName": "detectKeylessEnvDriftAction",
           "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
         },
+        "app/dashboard/analytics/page": {
+          "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/analytics/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "detectKeylessEnvDriftAction",
+          "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
+        },
         "app/dashboard/collection/add/page": {
           "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/collection/add/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/lib/actions/vinyls.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
@@ -544,6 +571,7 @@
         "app/auth/signup/[[...signup]]/page": "action-browser",
         "app/browse/page": "action-browser",
         "app/checkout/page": "action-browser",
+        "app/dashboard/analytics/page": "action-browser",
         "app/dashboard/collection/add/page": "action-browser",
         "app/dashboard/collection/page": "action-browser",
         "app/dashboard/feed/page": "action-browser",
@@ -584,6 +612,12 @@
           "exportedName": "deleteKeylessAction",
           "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
         },
+        "app/dashboard/analytics/page": {
+          "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/analytics/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteKeylessAction",
+          "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
+        },
         "app/dashboard/collection/add/page": {
           "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/collection/add/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/lib/actions/vinyls.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
@@ -685,6 +719,7 @@
         "app/auth/signup/[[...signup]]/page": "action-browser",
         "app/browse/page": "action-browser",
         "app/checkout/page": "action-browser",
+        "app/dashboard/analytics/page": "action-browser",
         "app/dashboard/collection/add/page": "action-browser",
         "app/dashboard/collection/page": "action-browser",
         "app/dashboard/feed/page": "action-browser",
@@ -725,6 +760,12 @@
           "exportedName": "syncKeylessConfigAction",
           "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
         },
+        "app/dashboard/analytics/page": {
+          "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/analytics/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "syncKeylessConfigAction",
+          "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js"
+        },
         "app/dashboard/collection/add/page": {
           "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/collection/add/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/lib/actions/vinyls.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
@@ -826,6 +867,7 @@
         "app/auth/signup/[[...signup]]/page": "action-browser",
         "app/browse/page": "action-browser",
         "app/checkout/page": "action-browser",
+        "app/dashboard/analytics/page": "action-browser",
         "app/dashboard/collection/add/page": "action-browser",
         "app/dashboard/collection/page": "action-browser",
         "app/dashboard/feed/page": "action-browser",
@@ -866,6 +908,12 @@
           "exportedName": "invalidateCacheAction",
           "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js"
         },
+        "app/dashboard/analytics/page": {
+          "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/analytics/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "invalidateCacheAction",
+          "filename": "dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js"
+        },
         "app/dashboard/collection/add/page": {
           "moduleId": "[project]/dev/RocktownLabs/projects/my-vinyl-shop/.next-internal/server/app/dashboard/collection/add/page/actions.js { ACTIONS_MODULE0 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/server/keyless-custom-headers.js [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/keyless-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/app-router/server-actions.js [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/dev/RocktownLabs/projects/my-vinyl-shop/lib/actions/vinyls.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
@@ -967,6 +1015,7 @@
         "app/auth/signup/[[...signup]]/page": "action-browser",
         "app/browse/page": "action-browser",
         "app/checkout/page": "action-browser",
+        "app/dashboard/analytics/page": "action-browser",
         "app/dashboard/collection/add/page": "action-browser",
         "app/dashboard/collection/page": "action-browser",
         "app/dashboard/feed/page": "action-browser",

@@ -181,6 +181,7 @@
 @layer theme {
   :root, :host {
     --color-red-500: #fb2c36;
+    --color-red-600: #e40014;
     --color-orange-50: #fff7ed;
     --color-orange-200: #ffd7a8;
     --color-orange-400: #ff8b1a;
@@ -194,6 +195,7 @@
     --color-amber-500: #f99c00;
     --color-amber-600: #dd7400;
     --color-yellow-500: #edb200;
+    --color-yellow-600: #cd8900;
     --color-lime-500: #80cd00;
     --color-green-100: #dcfce7;
     --color-green-400: #05df72;
@@ -277,6 +279,7 @@
   @supports (color: lab(0% 0 0)) {
     :root, :host {
       --color-red-500: lab(55.4814% 75.0732 48.8528);
+      --color-red-600: lab(48.4493% 77.4328 61.5452);
       --color-orange-50: lab(97.7008% 1.53735 5.90649);
       --color-orange-200: lab(88.4871% 9.94918 28.8378);
       --color-orange-400: lab(70.0429% 42.5156 75.8207);
@@ -290,6 +293,7 @@
       --color-amber-500: lab(72.7183% 31.8672 97.9407);
       --color-amber-600: lab(60.3514% 40.5624 87.1228);
       --color-yellow-500: lab(76.3898% 14.5258 98.4589);
+      --color-yellow-600: lab(62.7799% 22.4197 86.1544);
       --color-lime-500: lab(75.3197% -46.6547 86.1778);
       --color-green-100: lab(96.1861% -13.8464 6.52365);
       --color-green-400: lab(78.503% -64.9265 39.7492);
@@ -3413,6 +3417,10 @@
     color: var(--color-blue-500);
   }
 
+  .text-blue-600 {
+    color: var(--color-blue-600);
+  }
+
   .text-card-foreground {
     color: var(--card-foreground);
   }
@@ -3475,6 +3483,10 @@
     color: var(--color-red-500);
   }
 
+  .text-red-600 {
+    color: var(--color-red-600);
+  }
+
   .text-secondary-foreground {
     color: var(--secondary-foreground);
   }
@@ -3515,6 +3527,10 @@
     .text-white\/80 {
       color: color-mix(in oklab, var(--color-white) 80%, transparent);
     }
+  }
+
+  .text-yellow-600 {
+    color: var(--color-yellow-600);
   }
 
   .capitalize {
@@ -5234,6 +5250,12 @@
   @media (min-width: 40rem) {
     .sm\:grid-cols-4 {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .sm\:grid-cols-5 {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
 

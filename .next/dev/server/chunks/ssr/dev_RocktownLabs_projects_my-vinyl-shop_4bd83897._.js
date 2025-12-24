@@ -786,25 +786,19 @@ const genres = [
     "All Genres",
     "Rock",
     "Jazz",
-    "Soul",
-    "Pop",
-    "Hip-Hop",
     "Electronic",
+    "Hip-Hop",
     "Classical",
-    "Blues",
-    "Country",
-    "Funk",
-    "Progressive Rock",
-    "Metal",
-    "Indie",
-    "Folk",
-    "Techno",
-    "House",
-    "City Pop",
-    "Disco",
+    "Soul/R&B",
     "Punk",
-    "New Wave",
-    "Alternative"
+    "Metal",
+    "Folk",
+    "Country",
+    "Blues",
+    "Reggae",
+    "World",
+    "Soundtracks",
+    "Other"
 ];
 const conditions = [
     "new",
@@ -1049,7 +1043,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$proje
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$sparkles$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Sparkles$3e$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/lucide-react@0.454.0_react@19.2.0/node_modules/lucide-react/dist/esm/icons/sparkles.js [app-ssr] (ecmascript) <export default as Sparkles>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/lucide-react@0.454.0_react@19.2.0/node_modules/lucide-react/dist/esm/icons/lock.js [app-ssr] (ecmascript) <export default as Lock>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f40$clerk$2b$nextjs$40$6$2e$36$2e$5_next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plu_570422557b5de1dffb12a93f3aa74b9c$2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$client$2d$boundary$2f$PromisifiedAuthProvider$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__usePromisifiedAuth__as__useAuth$3e$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@clerk+nextjs@6.36.5_next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plu_570422557b5de1dffb12a93f3aa74b9c/node_modules/@clerk/nextjs/dist/esm/client-boundary/PromisifiedAuthProvider.js [app-ssr] (ecmascript) <export usePromisifiedAuth as useAuth>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$react$2d$query$40$5$2e$90$2e$12_react$40$19$2e$2$2e$0$2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/@tanstack+react-query@5.90.12_react@19.2.0/node_modules/@tanstack/react-query/build/modern/useQuery.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/ui/card.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/next@16.0.10_@babel+core@7.28.5_@opentelemetry+api@1.9.0_babel-plugin-react-compiler@1._ae3e58926edfd4e7bb18b6bd40329e1e/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 "use client";
@@ -1059,22 +1052,17 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$proje
 ;
 ;
 ;
-;
 function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
-    const { userId } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f40$clerk$2b$nextjs$40$6$2e$36$2e$5_next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plu_570422557b5de1dffb12a93f3aa74b9c$2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$client$2d$boundary$2f$PromisifiedAuthProvider$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__usePromisifiedAuth__as__useAuth$3e$__["useAuth"])();
-    const { data: user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$react$2d$query$40$5$2e$90$2e$12_react$40$19$2e$2$2e$0$2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useQuery"])({
-        queryKey: [
-            "currentUser"
-        ],
-        queryFn: async ()=>{
-            const res = await fetch("/api/users/me");
-            if (!res.ok) throw new Error("Failed to fetch user");
-            const data = await res.json();
-            return data.user;
-        },
-        enabled: !!userId
-    });
-    const hasAccess = user?.subscriptionTier === "vinyl_pro" || user?.subscriptionTier === "crate_digger";
+    const { has } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f40$clerk$2b$nextjs$40$6$2e$36$2e$5_next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plu_570422557b5de1dffb12a93f3aa74b9c$2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$client$2d$boundary$2f$PromisifiedAuthProvider$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__usePromisifiedAuth__as__useAuth$3e$__["useAuth"])();
+    // Check if user has the AI feature or a plan that includes it
+    // Using Clerk B2C billing: check feature 'ai_powered_listing_creation' or plans 'vinyl_pro'/'crate_digger'
+    const hasAccess = has && has({
+        feature: "ai_powered_listing_creation"
+    }) || has && has({
+        plan: "vinyl_pro"
+    }) || has && has({
+        plan: "crate_digger"
+    }) || false;
     if (!hasAccess) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "relative group",
@@ -1089,14 +1077,14 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
                             className: "h-4 w-4 mr-2"
                         }, void 0, false, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                            lineNumber: 41,
+                            lineNumber: 35,
                             columnNumber: 11
                         }, this),
                         "Analyze with AI"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                    lineNumber: 35,
+                    lineNumber: 29,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1114,14 +1102,14 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
                                                 className: "h-4 w-4 text-amber-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                                                lineNumber: 48,
+                                                lineNumber: 42,
                                                 columnNumber: 17
                                             }, this),
                                             "Premium Feature"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                                        lineNumber: 47,
+                                        lineNumber: 41,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardDescription"], {
@@ -1129,13 +1117,13 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
                                         children: "AI-powered vinyl analysis is available for Vinyl Pro and Crate Digger subscribers."
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                                        lineNumber: 51,
+                                        lineNumber: 45,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                                lineNumber: 46,
+                                lineNumber: 40,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1149,34 +1137,34 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
                                         children: "Upgrade to Pro"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                                        lineNumber: 57,
+                                        lineNumber: 51,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                                    lineNumber: 56,
+                                    lineNumber: 50,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                                lineNumber: 55,
+                                lineNumber: 49,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                        lineNumber: 45,
+                        lineNumber: 39,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                    lineNumber: 44,
+                    lineNumber: 38,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-            lineNumber: 34,
+            lineNumber: 28,
             columnNumber: 7
         }, this);
     }
@@ -1192,7 +1180,7 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
                     className: "h-4 w-4 mr-2 animate-spin"
                 }, void 0, false, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                    lineNumber: 76,
+                    lineNumber: 70,
                     columnNumber: 11
                 }, this),
                 "Analyzing..."
@@ -1203,7 +1191,7 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
                     className: "h-4 w-4 mr-2"
                 }, void 0, false, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-                    lineNumber: 81,
+                    lineNumber: 75,
                     columnNumber: 11
                 }, this),
                 "Analyze with AI"
@@ -1211,7 +1199,7 @@ function AIAnalysisButton({ onClick, disabled, isAnalyzing }) {
         }, void 0, true)
     }, void 0, false, {
         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/dashboard/forms/ai-analysis-button.tsx",
-        lineNumber: 67,
+        lineNumber: 61,
         columnNumber: 5
     }, this);
 }
