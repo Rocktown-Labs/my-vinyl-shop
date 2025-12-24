@@ -8,6 +8,13 @@
       "when": 1766594697715,
       "tag": "0000_fantastic_jack_flag",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1766600091763,
+      "tag": "0001_bright_lightspeed",
+      "breakpoints": true
     }
   ]
 }

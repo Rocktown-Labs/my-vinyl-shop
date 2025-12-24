@@ -38,57 +38,81 @@ async function migrateDatabase() {
   });
 
   try {
-    // Read the migration SQL file
-    const migrationPath = join(process.cwd(), "scripts", "002-add-stripe-connect-columns.sql");
-    const migration = readFileSync(migrationPath, "utf-8");
+    // Run multiple migrations in order
+    const migrationFiles = [
+      "002-add-stripe-connect-columns.sql",
+      "004-add-missing-user-columns.sql"
+    ];
+    
+    let totalSuccessCount = 0;
+    let totalErrorCount = 0;
+    
+    for (const migrationFile of migrationFiles) {
+      const migrationPath = join(process.cwd(), "scripts", migrationFile);
+      if (!existsSync(migrationPath)) {
+        console.log(`ℹ️  Skipping ${migrationFile} (file not found)`);
+        continue;
+      }
+      
+      console.log(`\n📄 Running migration: ${migrationFile}`);
+      const migration = readFileSync(migrationPath, "utf-8");
 
-    console.log("📝 Executing migration...");
+      console.log("📝 Executing migration...");
 
-    // Split by semicolons and execute each statement
-    const cleanedMigration = migration
-      .split("\n")
-      .map((line) => {
-        const commentIndex = line.indexOf("--");
-        if (commentIndex >= 0) {
-          return line.substring(0, commentIndex).trim();
-        }
-        return line.trim();
-      })
-      .filter((line) => line.length > 0)
-      .join("\n");
+      // Split by semicolons and execute each statement
+      const cleanedMigration = migration
+        .split("\n")
+        .map((line) => {
+          const commentIndex = line.indexOf("--");
+          if (commentIndex >= 0) {
+            return line.substring(0, commentIndex).trim();
+          }
+          return line.trim();
+        })
+        .filter((line) => line.length > 0)
+        .join("\n");
 
-    const statements = cleanedMigration
-      .split(";")
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0);
+      const statements = cleanedMigration
+        .split(";")
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
 
-    let successCount = 0;
-    let errorCount = 0;
+      let successCount = 0;
+      let errorCount = 0;
 
-    for (const statement of statements) {
-      if (statement.trim()) {
-        try {
-          await client.execute(statement);
-          console.log(`✅ Executed: ${statement.substring(0, 60)}...`);
-          successCount++;
-        } catch (error) {
-          // Ignore "duplicate column" errors (column already exists)
-          const errorMsg = error.message || "";
-          if (errorMsg.includes("duplicate column") || errorMsg.includes("already exists")) {
-            console.log(`ℹ️  Column already exists, skipping: ${statement.substring(0, 60)}...`);
+      for (const statement of statements) {
+        if (statement.trim()) {
+          try {
+            await client.execute(statement);
+            console.log(`✅ Executed: ${statement.substring(0, 60)}...`);
             successCount++;
-          } else {
-            console.warn(`⚠️  Error executing statement: ${errorMsg}`);
-            console.warn(`   Statement: ${statement.substring(0, 100)}...`);
-            errorCount++;
+          } catch (error) {
+            // Ignore "duplicate column" errors (column already exists)
+            const errorMsg = error.message || "";
+            if (errorMsg.includes("duplicate column") || errorMsg.includes("already exists")) {
+              console.log(`ℹ️  Column already exists, skipping: ${statement.substring(0, 60)}...`);
+              successCount++;
+            } else {
+              console.warn(`⚠️  Error executing statement: ${errorMsg}`);
+              console.warn(`   Statement: ${statement.substring(0, 100)}...`);
+              errorCount++;
+            }
           }
         }
       }
+
+      console.log(`✅ ${migrationFile} completed! ${successCount} statements executed successfully`);
+      if (errorCount > 0) {
+        console.log(`⚠️  ${errorCount} statements had errors`);
+      }
+      
+      totalSuccessCount += successCount;
+      totalErrorCount += errorCount;
     }
 
-    console.log(`\n✅ Migration completed! ${successCount} statements executed successfully`);
-    if (errorCount > 0) {
-      console.log(`⚠️  ${errorCount} statements had errors`);
+    console.log(`\n✅ All migrations completed! ${totalSuccessCount} statements executed successfully`);
+    if (totalErrorCount > 0) {
+      console.log(`⚠️  ${totalErrorCount} statements had errors`);
     }
   } catch (error) {
     console.error("❌ Error running migration:", error.message);

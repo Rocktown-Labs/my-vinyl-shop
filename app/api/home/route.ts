@@ -94,7 +94,7 @@ export async function GET() {
       .from(orders)
       .where(eq(orders.status, "delivered"));
 
-    // Get genre counts (for shop by genre section)
+    // Get genre counts (for shop by genre section - all genres)
     const genreCounts = await db
       .select({
         genre: vinyls.genre,
@@ -103,8 +103,7 @@ export async function GET() {
       .from(vinyls)
       .where(eq(vinyls.isListed, true))
       .groupBy(vinyls.genre)
-      .orderBy(desc(count()))
-      .limit(6);
+      .orderBy(desc(count()));
 
     return NextResponse.json({
       featuredVinyls: featuredVinyls.map((vinyl) => ({

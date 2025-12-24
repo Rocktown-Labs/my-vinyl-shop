@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `collection_privacy` text DEFAULT 'public';

@@ -2762,14 +2762,19 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$proje
 const genreColors = {
     Rock: "from-orange-500/20 to-red-500/20",
     Jazz: "from-blue-500/20 to-indigo-500/20",
-    Soul: "from-pink-500/20 to-rose-500/20",
-    "Hip-Hop": "from-violet-500/20 to-purple-500/20",
     Electronic: "from-cyan-500/20 to-teal-500/20",
+    "Hip-Hop": "from-violet-500/20 to-purple-500/20",
+    Classical: "from-slate-500/20 to-gray-500/20",
+    "Soul/R&B": "from-pink-500/20 to-rose-500/20",
+    Punk: "from-red-500/20 to-orange-500/20",
+    Metal: "from-gray-500/20 to-slate-500/20",
+    Folk: "from-green-500/20 to-emerald-500/20",
+    Country: "from-green-500/20 to-lime-500/20",
     Blues: "from-amber-500/20 to-yellow-500/20",
-    "R&B": "from-pink-500/20 to-rose-500/20",
-    Pop: "from-purple-500/20 to-pink-500/20",
-    Country: "from-green-500/20 to-emerald-500/20",
-    Classical: "from-slate-500/20 to-gray-500/20"
+    Reggae: "from-yellow-500/20 to-green-500/20",
+    World: "from-purple-500/20 to-pink-500/20",
+    Soundtracks: "from-indigo-500/20 to-blue-500/20",
+    Other: "from-gray-500/20 to-slate-500/20"
 };
 function getGenreColor(genre) {
     return genreColors[genre] || "from-gray-500/20 to-slate-500/20";
@@ -2780,7 +2785,7 @@ function formatCount(count) {
     }
     return count.toString();
 }
-// Default genres to always show (original homepage genres)
+// Default genres to always show (all available genres)
 const defaultGenres = [
     {
         name: "Rock",
@@ -2791,28 +2796,69 @@ const defaultGenres = [
         count: 8200
     },
     {
-        name: "Soul",
-        count: 6100
+        name: "Electronic",
+        count: 7300
     },
     {
         name: "Hip-Hop",
         count: 9800
     },
     {
-        name: "Electronic",
-        count: 7300
+        name: "Classical",
+        count: 4200
+    },
+    {
+        name: "Soul/R&B",
+        count: 6100
+    },
+    {
+        name: "Punk",
+        count: 3800
+    },
+    {
+        name: "Metal",
+        count: 2900
+    },
+    {
+        name: "Folk",
+        count: 3400
+    },
+    {
+        name: "Country",
+        count: 5100
     },
     {
         name: "Blues",
         count: 4500
+    },
+    {
+        name: "Reggae",
+        count: 2100
+    },
+    {
+        name: "World",
+        count: 1800
+    },
+    {
+        name: "Soundtracks",
+        count: 3200
+    },
+    {
+        name: "Other",
+        count: 1500
     }
 ];
 function ShopByGenreSection() {
     const { data, isLoading } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$lib$2f$hooks$2f$use$2d$home$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useHomeData"])();
-    // Use real data if available, otherwise fall back to default genres
-    const genres = data?.genres && data.genres.length > 0 ? data.genres : defaultGenres.map((g)=>({
-            name: g.name,
-            count: g.count
+    // Merge API data with default genres to ensure all genres are shown
+    // Use real counts from API when available, otherwise use default counts
+    const apiGenresMap = new Map((data?.genres || []).map((g)=>[
+            g.name,
+            g.count
+        ]));
+    const genres = defaultGenres.map((defaultGenre)=>({
+            name: defaultGenre.name,
+            count: apiGenresMap.get(defaultGenre.name) ?? defaultGenre.count
         }));
     if (isLoading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -2827,20 +2873,20 @@ function ShopByGenreSection() {
                                 className: "h-8 w-48 mx-auto mb-2"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                lineNumber: 57,
+                                lineNumber: 77,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$skeleton$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Skeleton"], {
                                 className: "h-4 w-64 mx-auto"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                lineNumber: 58,
+                                lineNumber: 78,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                        lineNumber: 56,
+                        lineNumber: 76,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2851,23 +2897,23 @@ function ShopByGenreSection() {
                                 className: "w-[120px] sm:w-[160px] lg:w-[180px] aspect-square rounded-lg flex-shrink-0"
                             }, i, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                lineNumber: 62,
+                                lineNumber: 82,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                        lineNumber: 60,
+                        lineNumber: 80,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                lineNumber: 55,
+                lineNumber: 75,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-            lineNumber: 54,
+            lineNumber: 74,
             columnNumber: 7
         }, this);
     }
@@ -2884,7 +2930,7 @@ function ShopByGenreSection() {
                             children: "Shop by Genre"
                         }, void 0, false, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                            lineNumber: 74,
+                            lineNumber: 94,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2892,13 +2938,13 @@ function ShopByGenreSection() {
                             children: "Find records that match your taste"
                         }, void 0, false, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                            lineNumber: 75,
+                            lineNumber: 95,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                    lineNumber: 73,
+                    lineNumber: 93,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2936,17 +2982,17 @@ function ShopByGenreSection() {
                                                             className: "w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-black"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                                            lineNumber: 93,
+                                                            lineNumber: 113,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                                        lineNumber: 92,
+                                                        lineNumber: 112,
                                                         columnNumber: 25
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                                    lineNumber: 91,
+                                                    lineNumber: 111,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2954,7 +3000,7 @@ function ShopByGenreSection() {
                                                     children: genre.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                                    lineNumber: 96,
+                                                    lineNumber: 116,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2965,49 +3011,49 @@ function ShopByGenreSection() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                                    lineNumber: 97,
+                                                    lineNumber: 117,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                            lineNumber: 90,
+                                            lineNumber: 110,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                        lineNumber: 89,
+                                        lineNumber: 109,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                    lineNumber: 88,
+                                    lineNumber: 108,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                                lineNumber: 87,
+                                lineNumber: 107,
                                 columnNumber: 15
                             }, this)
                         }, genre.name, false, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                            lineNumber: 79,
+                            lineNumber: 99,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-                    lineNumber: 77,
+                    lineNumber: 97,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-            lineNumber: 72,
+            lineNumber: 92,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/home/shop-by-genre-section.tsx",
-        lineNumber: 71,
+        lineNumber: 91,
         columnNumber: 5
     }, this);
 }

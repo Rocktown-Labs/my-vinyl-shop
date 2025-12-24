@@ -21,6 +21,13 @@ interface SellerProfileProps {
 export function SellerProfile({ sellerIdOrUsername }: SellerProfileProps) {
   const { userId } = useAuth();
 
+  // All hooks must be called before any early returns
+  const followUser = useFollowUser();
+  const unfollowUser = useUnfollowUser();
+  const [optimisticFollowing, setOptimisticFollowing] = useState(false);
+  const [followersModalOpen, setFollowersModalOpen] = useState(false);
+  const [followingModalOpen, setFollowingModalOpen] = useState(false);
+
   const { data, isLoading } = useQuery({
     queryKey: ["seller", sellerIdOrUsername],
     queryFn: async () => {
@@ -32,6 +39,12 @@ export function SellerProfile({ sellerIdOrUsername }: SellerProfileProps) {
       return res.json();
     },
   });
+
+  // Update optimistic state when actual state changes
+  const isFollowing = data?.isFollowing || false;
+  useEffect(() => {
+    setOptimisticFollowing(isFollowing);
+  }, [isFollowing]);
 
   if (isLoading) {
     return (
@@ -70,21 +83,7 @@ export function SellerProfile({ sellerIdOrUsername }: SellerProfileProps) {
   const isCurrentUser = seller.id === userId;
   const genres = seller.specializedGenres || [];
   const stats = data.stats || { followers: 0, following: 0 };
-  const isFollowing = data.isFollowing || false;
   const followsYou = data.followsYou || false;
-
-  const followUser = useFollowUser();
-  const unfollowUser = useUnfollowUser();
-
-  const [optimisticFollowing, setOptimisticFollowing] = useState(isFollowing);
-
-  // Update optimistic state when actual state changes
-  useEffect(() => {
-    setOptimisticFollowing(isFollowing);
-  }, [isFollowing]);
-
-  const [followersModalOpen, setFollowersModalOpen] = useState(false);
-  const [followingModalOpen, setFollowingModalOpen] = useState(false);
 
   const handleFollowToggle = async () => {
     if (optimisticFollowing) {

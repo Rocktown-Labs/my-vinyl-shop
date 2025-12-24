@@ -1,39 +1,39 @@
 export interface Vinyl {
-  id: string
-  title: string
-  artist: string
-  year: number
-  genre: string
-  condition: "new" | "mint" | "near-mint" | "very-good" | "good" | "fair"
-  price: number
-  quantity?: number // Added quantity field
+  id: string;
+  title: string;
+  artist: string;
+  year: number;
+  genre: string;
+  condition: "new" | "mint" | "near-mint" | "very-good" | "good" | "fair";
+  price: number;
+  quantity?: number; // Added quantity field
   images: {
-    frontCover: string
-    backCover: string
-    vinyl: string
-    sleeve?: string
-  }
-  sellerId: string
-  description: string
-  pressInfo?: string
-  catalogNumber?: string
-  label?: string
+    frontCover: string;
+    backCover: string;
+    vinyl: string;
+    sleeve?: string;
+  };
+  sellerId: string;
+  description: string;
+  pressInfo?: string;
+  catalogNumber?: string;
+  label?: string;
 }
 
 export interface Seller {
-  id: string
-  name: string
-  username: string
-  avatar: string
-  bio: string
-  location: string
-  country: string
-  joinedDate: string
-  totalSales: number
-  rating: number
-  verified: boolean
-  genres: string[]
-  shipsTo: string[]
+  id: string;
+  name: string;
+  username: string;
+  avatar: string;
+  bio: string;
+  location: string;
+  country: string;
+  joinedDate: string;
+  totalSales: number;
+  rating: number;
+  verified: boolean;
+  genres: string[];
+  shipsTo: string[];
 }
 
 export const mockSellers: Seller[] = [
@@ -157,7 +157,7 @@ export const mockSellers: Seller[] = [
     genres: ["Indie", "Rock", "Electronic"],
     shipsTo: ["Australia", "New Zealand", "United States"],
   },
-]
+];
 
 export const mockVinyls: Vinyl[] = [
   {
@@ -175,7 +175,8 @@ export const mockVinyls: Vinyl[] = [
       vinyl: "/blue-vinyl-record.png",
     },
     sellerId: "1",
-    description: "Original pressing. Cover shows minimal wear, vinyl is clean with no scratches.",
+    description:
+      "Original pressing. Cover shows minimal wear, vinyl is clean with no scratches.",
     pressInfo: "Original Columbia pressing",
     catalogNumber: "CL 1355",
     label: "Columbia",
@@ -195,7 +196,8 @@ export const mockVinyls: Vinyl[] = [
       vinyl: "/black-vinyl-record.png",
     },
     sellerId: "1",
-    description: "1969 UK pressing. Some shelf wear on cover, vinyl plays beautifully.",
+    description:
+      "1969 UK pressing. Some shelf wear on cover, vinyl plays beautifully.",
     pressInfo: "UK Apple Records pressing",
     catalogNumber: "PCS 7088",
     label: "Apple Records",
@@ -235,7 +237,8 @@ export const mockVinyls: Vinyl[] = [
       vinyl: "/black-vinyl-pristine.jpg",
     },
     sellerId: "1",
-    description: "Mint condition original pressing. Stored properly, never played.",
+    description:
+      "Mint condition original pressing. Stored properly, never played.",
     pressInfo: "Original Tamla pressing",
     catalogNumber: "TS 310",
     label: "Tamla",
@@ -315,41 +318,43 @@ export const mockVinyls: Vinyl[] = [
       vinyl: "/placeholder.svg?height=500&width=500",
     },
     sellerId: "1",
-    description: "Classic spiritual jazz masterpiece. Original Impulse! pressing.",
+    description:
+      "Classic spiritual jazz masterpiece. Original Impulse! pressing.",
     pressInfo: "Impulse! Records",
     catalogNumber: "A-77",
     label: "Impulse!",
   },
-]
+];
 
 export const genres = [
   "All Genres",
   "Rock",
   "Jazz",
-  "Soul",
-  "Pop",
-  "Hip-Hop",
   "Electronic",
+  "Hip-Hop",
   "Classical",
-  "Blues",
-  "Country",
-  "Funk",
-  "Progressive Rock",
-  "Metal",
-  "Indie",
-  "Folk",
-  "Techno",
-  "House",
-  "City Pop",
-  "Disco",
+  "Soul/R&B",
   "Punk",
-  "New Wave",
-  "Alternative",
-]
+  "Metal",
+  "Folk",
+  "Country",
+  "Blues",
+  "Reggae",
+  "World",
+  "Soundtracks",
+  "Other",
+];
 
-export const conditions = ["new", "mint", "near-mint", "very-good", "good", "fair"]
+export const conditions = [
+  "new",
+  "mint",
+  "near-mint",
+  "very-good",
+  "good",
+  "fair",
+];
 
-export const years = Array.from({ length: 75 }, (_, i) => 2024 - i)
+export const years = Array.from({ length: 75 }, (_, i) => 2024 - i);
 
 export const countries = [
   "All Countries",
@@ -363,28 +368,28 @@ export const countries = [
   "Netherlands",
   "Italy",
   "Spain",
-]
+];
 
-export const sellerRatings = ["Any Rating", "4.5+", "4.0+", "3.5+"]
+export const sellerRatings = ["Any Rating", "4.5+", "4.0+", "3.5+"];
 
 export interface FeedPost {
-  id: string
-  sellerId: string
-  type: "new_listing" | "price_drop" | "restock" | "announcement"
-  vinylId?: string
-  content: string
-  createdAt: string
+  id: string;
+  sellerId: string;
+  type: "new_listing" | "price_drop" | "restock" | "announcement";
+  vinylId?: string;
+  content: string;
+  createdAt: string;
 }
 
 export interface Notification {
-  id: string
-  type: "order" | "message" | "follow" | "like" | "price_drop" | "bid"
-  title: string
-  content: string
-  read: boolean
-  createdAt: string
-  link?: string
-  avatar?: string
+  id: string;
+  type: "order" | "message" | "follow" | "like" | "price_drop" | "bid";
+  title: string;
+  content: string;
+  read: boolean;
+  createdAt: string;
+  link?: string;
+  avatar?: string;
 }
 
 export const mockFeedPosts: FeedPost[] = [
@@ -393,7 +398,8 @@ export const mockFeedPosts: FeedPost[] = [
     sellerId: "1",
     type: "new_listing",
     vinylId: "1",
-    content: "Just added a rare original pressing of Kind of Blue to my collection!",
+    content:
+      "Just added a rare original pressing of Kind of Blue to my collection!",
     createdAt: "2024-12-20T10:30:00Z",
   },
   {
@@ -408,14 +414,16 @@ export const mockFeedPosts: FeedPost[] = [
     id: "fp3",
     sellerId: "5",
     type: "restock",
-    content: "Restocked some amazing Japanese city pop records. Check them out!",
+    content:
+      "Restocked some amazing Japanese city pop records. Check them out!",
     createdAt: "2024-12-18T09:00:00Z",
   },
   {
     id: "fp4",
     sellerId: "6",
     type: "announcement",
-    content: "Heading to a record fair in Munich this weekend. Expect new techno and house arrivals next week!",
+    content:
+      "Heading to a record fair in Munich this weekend. Expect new techno and house arrivals next week!",
     createdAt: "2024-12-17T14:20:00Z",
   },
   {
@@ -423,10 +431,11 @@ export const mockFeedPosts: FeedPost[] = [
     sellerId: "7",
     type: "new_listing",
     vinylId: "6",
-    content: "Found a pristine copy of Dark Side of the Moon at an estate sale. First pressing!",
+    content:
+      "Found a pristine copy of Dark Side of the Moon at an estate sale. First pressing!",
     createdAt: "2024-12-16T11:00:00Z",
   },
-]
+];
 
 export const mockNotifications: Notification[] = [
   {
@@ -476,24 +485,24 @@ export const mockNotifications: Notification[] = [
     createdAt: "2024-12-16T11:00:00Z",
     link: "/product/2",
   },
-]
+];
 
 export interface Message {
-  id: string
-  senderId: string
-  content: string
-  createdAt: string
-  read: boolean
+  id: string;
+  senderId: string;
+  content: string;
+  createdAt: string;
+  read: boolean;
 }
 
 export interface Conversation {
-  id: string
-  participants: string[]
-  type: "transaction" | "social"
-  orderId?: string
-  vinylId?: string
-  lastMessage: Message
-  messages: Message[]
+  id: string;
+  participants: string[];
+  type: "transaction" | "social";
+  orderId?: string;
+  vinylId?: string;
+  lastMessage: Message;
+  messages: Message[];
 }
 
 export const mockConversations: Conversation[] = [
@@ -506,7 +515,8 @@ export const mockConversations: Conversation[] = [
     lastMessage: {
       id: "m1",
       senderId: "1",
-      content: "Your order has been shipped! Here is the tracking number: 1Z999AA10123456784",
+      content:
+        "Your order has been shipped! Here is the tracking number: 1Z999AA10123456784",
       createdAt: "2024-12-20T10:30:00Z",
       read: false,
     },
@@ -514,14 +524,16 @@ export const mockConversations: Conversation[] = [
       {
         id: "m0",
         senderId: "user",
-        content: "Hi! I just placed an order for Kind of Blue. When do you expect to ship it?",
+        content:
+          "Hi! I just placed an order for Kind of Blue. When do you expect to ship it?",
         createdAt: "2024-12-19T14:00:00Z",
         read: true,
       },
       {
         id: "m1",
         senderId: "1",
-        content: "Your order has been shipped! Here is the tracking number: 1Z999AA10123456784",
+        content:
+          "Your order has been shipped! Here is the tracking number: 1Z999AA10123456784",
         createdAt: "2024-12-20T10:30:00Z",
         read: false,
       },
@@ -534,7 +546,8 @@ export const mockConversations: Conversation[] = [
     lastMessage: {
       id: "m3",
       senderId: "2",
-      content: "Thanks for the follow! Let me know if you're looking for anything specific.",
+      content:
+        "Thanks for the follow! Let me know if you're looking for anything specific.",
       createdAt: "2024-12-18T16:45:00Z",
       read: true,
     },
@@ -549,7 +562,8 @@ export const mockConversations: Conversation[] = [
       {
         id: "m3",
         senderId: "2",
-        content: "Thanks for the follow! Let me know if you're looking for anything specific.",
+        content:
+          "Thanks for the follow! Let me know if you're looking for anything specific.",
         createdAt: "2024-12-18T16:45:00Z",
         read: true,
       },
@@ -584,4 +598,4 @@ export const mockConversations: Conversation[] = [
       },
     ],
   },
-]
+];

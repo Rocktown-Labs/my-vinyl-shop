@@ -3072,6 +3072,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$proje
 ;
 function SellerProfile({ sellerIdOrUsername }) {
     const { userId } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f40$clerk$2b$nextjs$40$6$2e$36$2e$5_next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plu_570422557b5de1dffb12a93f3aa74b9c$2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$client$2d$boundary$2f$PromisifiedAuthProvider$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__usePromisifiedAuth__as__useAuth$3e$__["useAuth"])();
+    // All hooks must be called before any early returns
+    const followUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$lib$2f$hooks$2f$use$2d$follow$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useFollowUser"])();
+    const unfollowUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$lib$2f$hooks$2f$use$2d$follow$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useUnfollowUser"])();
+    const [optimisticFollowing, setOptimisticFollowing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [followersModalOpen, setFollowersModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [followingModalOpen, setFollowingModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const { data, isLoading } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$react$2d$query$40$5$2e$90$2e$12_react$40$19$2e$2$2e$0$2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             "seller",
@@ -3086,6 +3092,13 @@ function SellerProfile({ sellerIdOrUsername }) {
             return res.json();
         }
     });
+    // Update optimistic state when actual state changes
+    const isFollowing = data?.isFollowing || false;
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        setOptimisticFollowing(isFollowing);
+    }, [
+        isFollowing
+    ]);
     if (isLoading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "border-b border-border/40",
@@ -3096,7 +3109,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                         className: "h-6 w-24 mb-4"
                     }, void 0, false, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                        lineNumber: 40,
+                        lineNumber: 53,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3106,7 +3119,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                 className: "h-32 w-32 sm:h-40 sm:w-40 rounded-full"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                lineNumber: 42,
+                                lineNumber: 55,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3116,44 +3129,44 @@ function SellerProfile({ sellerIdOrUsername }) {
                                         className: "h-8 w-48"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                        lineNumber: 44,
+                                        lineNumber: 57,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$skeleton$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Skeleton"], {
                                         className: "h-4 w-32"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                        lineNumber: 45,
+                                        lineNumber: 58,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$skeleton$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Skeleton"], {
                                         className: "h-4 w-full"
                                     }, void 0, false, {
                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                        lineNumber: 46,
+                                        lineNumber: 59,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                lineNumber: 43,
+                                lineNumber: 56,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                        lineNumber: 41,
+                        lineNumber: 54,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                lineNumber: 39,
+                lineNumber: 52,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-            lineNumber: 38,
+            lineNumber: 51,
             columnNumber: 7
         }, this);
     }
@@ -3170,7 +3183,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                             children: "Seller not found"
                         }, void 0, false, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                            lineNumber: 59,
+                            lineNumber: 72,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3181,28 +3194,28 @@ function SellerProfile({ sellerIdOrUsername }) {
                                 children: "Browse Sellers"
                             }, void 0, false, {
                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                lineNumber: 61,
+                                lineNumber: 74,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                            lineNumber: 60,
+                            lineNumber: 73,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                    lineNumber: 58,
+                    lineNumber: 71,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                lineNumber: 57,
+                lineNumber: 70,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-            lineNumber: 56,
+            lineNumber: 69,
             columnNumber: 7
         }, this);
     }
@@ -3213,19 +3226,7 @@ function SellerProfile({ sellerIdOrUsername }) {
         followers: 0,
         following: 0
     };
-    const isFollowing = data.isFollowing || false;
     const followsYou = data.followsYou || false;
-    const followUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$lib$2f$hooks$2f$use$2d$follow$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useFollowUser"])();
-    const unfollowUser = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$lib$2f$hooks$2f$use$2d$follow$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useUnfollowUser"])();
-    const [optimisticFollowing, setOptimisticFollowing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(isFollowing);
-    // Update optimistic state when actual state changes
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        setOptimisticFollowing(isFollowing);
-    }, [
-        isFollowing
-    ]);
-    const [followersModalOpen, setFollowersModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [followingModalOpen, setFollowingModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const handleFollowToggle = async ()=>{
         if (optimisticFollowing) {
             setOptimisticFollowing(false);
@@ -3251,7 +3252,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                     alt: seller.displayName || seller.username || "Seller"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 103,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarFallback"], {
@@ -3259,13 +3260,13 @@ function SellerProfile({ sellerIdOrUsername }) {
                                     children: (seller.displayName || seller.username || "U").substring(0, 2).toUpperCase()
                                 }, void 0, false, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                    lineNumber: 105,
+                                    lineNumber: 104,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                            lineNumber: 103,
+                            lineNumber: 102,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3284,20 +3285,20 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                             children: seller.displayName || seller.username || "Unknown"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                            lineNumber: 114,
+                                                            lineNumber: 113,
                                                             columnNumber: 19
                                                         }, this),
                                                         seller.isVerified && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
                                                             className: "h-5 w-5 sm:h-6 sm:w-6 text-accent fill-accent/20"
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                            lineNumber: 118,
+                                                            lineNumber: 117,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 113,
+                                                    lineNumber: 112,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3308,13 +3309,13 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 121,
+                                                    lineNumber: 120,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 112,
+                                            lineNumber: 111,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3329,12 +3330,12 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                         children: "Edit Profile"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                        lineNumber: 128,
+                                                        lineNumber: 127,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 127,
+                                                    lineNumber: 126,
                                                     columnNumber: 19
                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                                     variant: optimisticFollowing ? "outline" : "default",
@@ -3347,7 +3348,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                                lineNumber: 139,
+                                                                lineNumber: 138,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "Unfollow"
@@ -3358,7 +3359,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                                 className: "h-4 w-4 mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                                lineNumber: 144,
+                                                                lineNumber: 143,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "Follow"
@@ -3366,7 +3367,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     }, void 0, true)
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 131,
+                                                    lineNumber: 130,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3377,12 +3378,12 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                        lineNumber: 151,
+                                                        lineNumber: 150,
                                                         columnNumber: 19
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 150,
+                                                    lineNumber: 149,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenu"], {
@@ -3397,17 +3398,17 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                                     className: "h-4 w-4"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                                    lineNumber: 156,
+                                                                    lineNumber: 155,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                                lineNumber: 155,
+                                                                lineNumber: 154,
                                                                 columnNumber: 21
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                            lineNumber: 154,
+                                                            lineNumber: 153,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuContent"], {
@@ -3417,38 +3418,38 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                                     children: "Report"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                                    lineNumber: 160,
+                                                                    lineNumber: 159,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 !isCurrentUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
                                                                     children: "Block"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                                    lineNumber: 161,
+                                                                    lineNumber: 160,
                                                                     columnNumber: 40
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                            lineNumber: 159,
+                                                            lineNumber: 158,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 153,
+                                                    lineNumber: 152,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 125,
+                                            lineNumber: 124,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                    lineNumber: 111,
+                                    lineNumber: 110,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3463,7 +3464,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     children: stats.followers
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 173,
+                                                    lineNumber: 172,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3471,13 +3472,13 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     children: "Followers"
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 174,
+                                                    lineNumber: 173,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 169,
+                                            lineNumber: 168,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3489,7 +3490,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     children: stats.following
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 180,
+                                                    lineNumber: 179,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3497,13 +3498,13 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     children: "Following"
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 181,
+                                                    lineNumber: 180,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 176,
+                                            lineNumber: 175,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3514,7 +3515,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     children: data.listings?.length || 0
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 184,
+                                                    lineNumber: 183,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3522,13 +3523,13 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     children: "Listings"
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 185,
+                                                    lineNumber: 184,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 183,
+                                            lineNumber: 182,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3539,7 +3540,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     children: data.collection?.length || 0
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 188,
+                                                    lineNumber: 187,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3547,19 +3548,19 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     children: "Collection"
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 189,
+                                                    lineNumber: 188,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 187,
+                                            lineNumber: 186,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                    lineNumber: 168,
+                                    lineNumber: 167,
                                     columnNumber: 13
                                 }, this),
                                 followsYou && !isCurrentUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -3568,7 +3569,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                     children: "Follows you"
                                 }, void 0, false, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                    lineNumber: 195,
+                                    lineNumber: 194,
                                     columnNumber: 15
                                 }, this),
                                 seller.bio && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3576,7 +3577,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                     children: seller.bio
                                 }, void 0, false, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                    lineNumber: 202,
+                                    lineNumber: 201,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3589,20 +3590,20 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     className: "h-3.5 w-3.5 sm:h-4 sm:w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 209,
+                                                    lineNumber: 208,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     children: seller.location
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 210,
+                                                    lineNumber: 209,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 208,
+                                            lineNumber: 207,
                                             columnNumber: 17
                                         }, this),
                                         seller.createdAt && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3612,7 +3613,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     className: "h-3.5 w-3.5 sm:h-4 sm:w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 215,
+                                                    lineNumber: 214,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3626,13 +3627,13 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                    lineNumber: 216,
+                                                    lineNumber: 215,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 214,
+                                            lineNumber: 213,
                                             columnNumber: 17
                                         }, this),
                                         genres.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3644,35 +3645,35 @@ function SellerProfile({ sellerIdOrUsername }) {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                                lineNumber: 227,
+                                                lineNumber: 226,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                            lineNumber: 226,
+                                            lineNumber: 225,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                                    lineNumber: 206,
+                                    lineNumber: 205,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                            lineNumber: 110,
+                            lineNumber: 109,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                    lineNumber: 102,
+                    lineNumber: 101,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                lineNumber: 101,
+                lineNumber: 100,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$seller$2f$followers$2d$modal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FollowersModal"], {
@@ -3681,7 +3682,7 @@ function SellerProfile({ sellerIdOrUsername }) {
                 onOpenChange: setFollowersModalOpen
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                lineNumber: 234,
+                lineNumber: 233,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_$40$babel$2b$core$40$7$2e$28$2e$5_$40$opentelemetry$2b$api$40$1$2e$9$2e$0_babel$2d$plugin$2d$react$2d$compiler$40$1$2e$_ae3e58926edfd4e7bb18b6bd40329e1e$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$components$2f$seller$2f$following$2d$modal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FollowingModal"], {
@@ -3690,13 +3691,13 @@ function SellerProfile({ sellerIdOrUsername }) {
                 onOpenChange: setFollowingModalOpen
             }, void 0, false, {
                 fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-                lineNumber: 239,
+                lineNumber: 238,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx",
-        lineNumber: 100,
+        lineNumber: 99,
         columnNumber: 5
     }, this);
 }

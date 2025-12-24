@@ -10,14 +10,19 @@ import { Button } from "@/components/ui/button";
 const genreColors: Record<string, string> = {
   Rock: "from-orange-500/20 to-red-500/20",
   Jazz: "from-blue-500/20 to-indigo-500/20",
-  Soul: "from-pink-500/20 to-rose-500/20",
-  "Hip-Hop": "from-violet-500/20 to-purple-500/20",
   Electronic: "from-cyan-500/20 to-teal-500/20",
-  Blues: "from-amber-500/20 to-yellow-500/20",
-  "R&B": "from-pink-500/20 to-rose-500/20",
-  Pop: "from-purple-500/20 to-pink-500/20",
-  Country: "from-green-500/20 to-emerald-500/20",
+  "Hip-Hop": "from-violet-500/20 to-purple-500/20",
   Classical: "from-slate-500/20 to-gray-500/20",
+  "Soul/R&B": "from-pink-500/20 to-rose-500/20",
+  Punk: "from-red-500/20 to-orange-500/20",
+  Metal: "from-gray-500/20 to-slate-500/20",
+  Folk: "from-green-500/20 to-emerald-500/20",
+  Country: "from-green-500/20 to-lime-500/20",
+  Blues: "from-amber-500/20 to-yellow-500/20",
+  Reggae: "from-yellow-500/20 to-green-500/20",
+  World: "from-purple-500/20 to-pink-500/20",
+  Soundtracks: "from-indigo-500/20 to-blue-500/20",
+  Other: "from-gray-500/20 to-slate-500/20",
 };
 
 function getGenreColor(genre: string): string {
@@ -31,23 +36,38 @@ function formatCount(count: number): string {
   return count.toString();
 }
 
-// Default genres to always show (original homepage genres)
+// Default genres to always show (all available genres)
 const defaultGenres = [
   { name: "Rock", count: 12500 },
   { name: "Jazz", count: 8200 },
-  { name: "Soul", count: 6100 },
-  { name: "Hip-Hop", count: 9800 },
   { name: "Electronic", count: 7300 },
+  { name: "Hip-Hop", count: 9800 },
+  { name: "Classical", count: 4200 },
+  { name: "Soul/R&B", count: 6100 },
+  { name: "Punk", count: 3800 },
+  { name: "Metal", count: 2900 },
+  { name: "Folk", count: 3400 },
+  { name: "Country", count: 5100 },
   { name: "Blues", count: 4500 },
+  { name: "Reggae", count: 2100 },
+  { name: "World", count: 1800 },
+  { name: "Soundtracks", count: 3200 },
+  { name: "Other", count: 1500 },
 ];
 
 export function ShopByGenreSection() {
   const { data, isLoading } = useHomeData();
 
-  // Use real data if available, otherwise fall back to default genres
-  const genres = data?.genres && data.genres.length > 0 
-    ? data.genres 
-    : defaultGenres.map(g => ({ name: g.name, count: g.count }));
+  // Merge API data with default genres to ensure all genres are shown
+  // Use real counts from API when available, otherwise use default counts
+  const apiGenresMap = new Map(
+    (data?.genres || []).map((g: { name: string; count: number }) => [g.name, g.count])
+  );
+  
+  const genres = defaultGenres.map((defaultGenre) => ({
+    name: defaultGenre.name,
+    count: apiGenresMap.get(defaultGenre.name) ?? defaultGenre.count,
+  }));
 
   if (isLoading) {
     return (

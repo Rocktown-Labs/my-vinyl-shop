@@ -1122,3 +1122,310 @@ Import traces:
     ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
 [02:53:08.155] Server  LOG      ✓ Compiled in 39ms
 [03:00:50.513] Browser WARN    Clerk: The prop "redirectUrl" is deprecated and should be replaced with the new "fallbackRedirectUrl" or "forceRedirectUrl" props instead. Learn more: https://clerk.com/docs/guides/custom-redirects#redirect-url-props
+[03:11:42.402] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:11:42.647] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:11:42.647] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:11:42.647] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:11:42.647] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766599877521}
+[03:11:49.838] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/onboarding color: rgb(120, 120, 120) color: inherit {"dp":"/onboarding","o":"http://localhost:3000/onboarding","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766599884733}
+[03:13:14.599] Browser WARN    You may test your Stripe.js integration over HTTP. However, live Stripe.js integrations must use HTTPS.
+[03:13:20.588] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766599975484}
+[03:13:32.785] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/onboarding color: rgb(120, 120, 120) color: inherit {"dp":"/onboarding","o":"http://localhost:3000/onboarding","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766599987683}
+[03:13:53.170] Server  ERROR   Onboarding complete error: Error: Failed query: insert into "users" ("id", "email", "username", "display_name", "bio", "avatar_url", "cover_image_url", "location", "country", "website", "instagram_handle", "discogs_username", "is_verified", "is_seller", "subscription_tier", "ships_worldwide", "specialized_genres", "onboarding_completed", "stripe_connect_account_id", "stripe_connect_onboarding_status", "stripe_connect_onboarding_link", "last_username_change_at", "collection_privacy", "embedding", "created_at", "updated_at") values (?, ?, ?, ?, ?, ?, null, ?, ?, null, null, null, ?, ?, ?, ?, ?, ?, ?, ?, null, null, ?, null, ?, ?) on conflict ("users"."id") do update set "username" = ?, "display_name" = ?, "bio" = ?, "avatar_url" = ?, "location" = ?, "country" = ?, "is_seller" = ?, "subscription_tier" = ?, "ships_worldwide" = ?, "specialized_genres" = ?, "onboarding_completed" = ?, "updated_at" = ?
+params: user_37IoJgaKF2sMms9YeO9xgcJTW51,cg@rocktownlabs.com,rocktownvinyls,Rocktown Vinyls,Rocktown Vinyls store,https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zNzh3bjltSjFIOTJyWnpkZHJueXUzUXFvYTQiLCJyaWQiOiJ1c2VyXzM3SW9KZ2FLRjJzTW1zOVllTzl4Z2NKVFc1MSJ9,Little Rock, AR,United States,0,1,free,1,["Soul/R&B","Hip-Hop","Jazz","Soundtracks"],1,,,public,1766600007,1766600007,rocktownvinyls,Rocktown Vinyls,Rocktown Vinyls store,https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zNzh3bjltSjFIOTJyWnpkZHJueXUzUXFvYTQiLCJyaWQiOiJ1c2VyXzM3SW9KZ2FLRjJzTW1zOVllTzl4Z2NKVFc1MSJ9,Little Rock, AR,United States,1,free,1,["Soul/R&B","Hip-Hop","Jazz","Soundtracks"],1,1766600007
+[03:14:12.973] Browser ERROR   Error completing onboarding: {}
+[03:15:38.507] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:15:38.717] Browser WARN    Image with src "/my-vinyl-shop-logo.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[03:15:38.717] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[03:15:38.717] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:15:38.717] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:15:38.717] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[03:15:38.717] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600113616}
+[03:15:52.583] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/feed color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/feed","o":"http://localhost:3000/dashboard/feed","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600127475}
+[03:15:53.942] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/notifications color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/notifications","o":"http://localhost:3000/dashboard/notifications","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600128820}
+[03:15:55.163] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/messages color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/messages","o":"http://localhost:3000/dashboard/messages","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600130061}
+[03:15:56.175] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/collection color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/collection","o":"http://localhost:3000/dashboard/collection","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600131073}
+[03:15:57.151] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/listings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/listings","o":"http://localhost:3000/dashboard/listings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600132049}
+[03:15:58.414] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/orders color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/orders","o":"http://localhost:3000/dashboard/orders","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600133260}
+[03:15:59.476] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/profile color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/profile","o":"http://localhost:3000/dashboard/profile","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600134373}
+[03:16:00.968] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard/settings color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard/settings","o":"http://localhost:3000/dashboard/settings","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600135861}
+[03:16:06.569] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600141466}
+[03:16:10.776] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/browse color: rgb(120, 120, 120) color: inherit {"dp":"/browse","o":"http://localhost:3000/browse","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600145640}
+[03:16:10.776] Browser ERROR   In HTML, %s cannot be a descendant of <%s>.
+This will cause a hydration error.%s <div> p 
+
+  ...
+    <Suspense name="browse/" fallback={<Fragment>}>
+      <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+        <RedirectBoundary>
+          <RedirectErrorBoundary router={{...}}>
+            <InnerLayoutRouter url="/browse" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+              <SegmentViewNode type="page" pagePath="/dev/Rockt...">
+                <SegmentTrieNode>
+                <ClientPageRoot Component={function BrowsePage} serverProvidedParams={{...}}>
+                  <BrowsePage params={Promise} searchParams={Promise}>
+                    <div className="flex min-h...">
+                      <SiteHeader>
+                      <main className="flex-1 pb-...">
+                        <div>
+                        <section>
+                        <div className="max-w-7xl ...">
+                          <AnimatePresence>
+                          <div className="flex items...">
+>                           <p className="text-sm text-muted-foreground">
+                              <Skeleton className="h-4 w-32">
+>                               <div data-slot="skeleton" className="bg-accent animate-pulse rounded-md h-4 w-32">
+                          ...
+                      ...
+              ...
+            ...
+
+[03:16:10.776] Browser ERROR   <%s> cannot contain a nested %s.
+See this log for the ancestor stack trace. p <div>
+[03:16:54.921] Server  LOG      ✓ Compiled in 58ms
+[03:17:01.347] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/sellers color: rgb(120, 120, 120) color: inherit {"dp":"/sellers","o":"http://localhost:3000/sellers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600196245}
+[03:17:09.224] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/seller/rocktownvinyls color: rgb(120, 120, 120) color: inherit {"dp":"/seller/[id]","o":"http://localhost:3000/seller/rocktownvinyls","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600204121}
+[03:17:10.521] Browser ERROR   React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ SellerProfile 1. useContext                 useContext
+2. useContext                 useContext
+3. useContext                 useContext
+4. useContext                 useContext
+5. useContext                 useContext
+6. useCallback                useCallback
+7. useCallback                useCallback
+8. useCallback                useCallback
+9. useContext                 useContext
+10. useContext                useContext
+11. useContext                useContext
+12. useEffect                 useEffect
+13. useState                  useState
+14. useCallback               useCallback
+15. useSyncExternalStore      useSyncExternalStore
+16. useEffect                 useEffect
+17. undefined                 useContext
+
+[03:17:10.521] Browser ERROR   uncaughtError: Error: Rendered more hooks than during the previous render.
+[03:17:50.662] Server  LOG      ✓ Compiled in 70ms
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:89:9
+Ecmascript file had an error
+  87 |   const followsYou = data.followsYou || false;
+  88 |
+> 89 |   const followUser = useFollowUser();
+     |         ^^^^^^^^^^
+  90 |   const unfollowUser = useUnfollowUser();
+  91 |
+  92 |   const [optimisticFollowing, setOptimisticFollowing] = useState(isFollowing);
+
+the name `followUser` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:99:10
+Ecmascript file had an error
+   97 |   }, [isFollowing]);
+   98 |
+>  99 |   const [followersModalOpen, setFollowersModalOpen] = useState(false);
+      |          ^^^^^^^^^^^^^^^^^^
+  100 |   const [followingModalOpen, setFollowingModalOpen] = useState(false);
+  101 |
+  102 |   const handleFollowToggle = async () => {
+
+the name `followersModalOpen` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:100:10
+Ecmascript file had an error
+   98 |
+   99 |   const [followersModalOpen, setFollowersModalOpen] = useState(false);
+> 100 |   const [followingModalOpen, setFollowingModalOpen] = useState(false);
+      |          ^^^^^^^^^^^^^^^^^^
+  101 |
+  102 |   const handleFollowToggle = async () => {
+  103 |     if (optimisticFollowing) {
+
+the name `followingModalOpen` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:86:9
+Ecmascript file had an error
+  84 |   const genres = seller.specializedGenres || [];
+  85 |   const stats = data.stats || { followers: 0, following: 0 };
+> 86 |   const isFollowing = data.isFollowing || false;
+     |         ^^^^^^^^^^^
+  87 |   const followsYou = data.followsYou || false;
+  88 |
+  89 |   const followUser = useFollowUser();
+
+the name `isFollowing` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:92:10
+Ecmascript file had an error
+  90 |   const unfollowUser = useUnfollowUser();
+  91 |
+> 92 |   const [optimisticFollowing, setOptimisticFollowing] = useState(isFollowing);
+     |          ^^^^^^^^^^^^^^^^^^^
+  93 |
+  94 |   // Update optimistic state when actual state changes
+  95 |   useEffect(() => {
+
+the name `optimisticFollowing` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:99:30
+Ecmascript file had an error
+   97 |   }, [isFollowing]);
+   98 |
+>  99 |   const [followersModalOpen, setFollowersModalOpen] = useState(false);
+      |                              ^^^^^^^^^^^^^^^^^^^^^
+  100 |   const [followingModalOpen, setFollowingModalOpen] = useState(false);
+  101 |
+  102 |   const handleFollowToggle = async () => {
+
+the name `setFollowersModalOpen` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:100:30
+Ecmascript file had an error
+   98 |
+   99 |   const [followersModalOpen, setFollowersModalOpen] = useState(false);
+> 100 |   const [followingModalOpen, setFollowingModalOpen] = useState(false);
+      |                              ^^^^^^^^^^^^^^^^^^^^^
+  101 |
+  102 |   const handleFollowToggle = async () => {
+  103 |     if (optimisticFollowing) {
+
+the name `setFollowingModalOpen` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:92:31
+Ecmascript file had an error
+  90 |   const unfollowUser = useUnfollowUser();
+  91 |
+> 92 |   const [optimisticFollowing, setOptimisticFollowing] = useState(isFollowing);
+     |                               ^^^^^^^^^^^^^^^^^^^^^^
+  93 |
+  94 |   // Update optimistic state when actual state changes
+  95 |   useEffect(() => {
+
+the name `setOptimisticFollowing` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:50.765] Browser ERROR   ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx:90:9
+Ecmascript file had an error
+  88 |
+  89 |   const followUser = useFollowUser();
+> 90 |   const unfollowUser = useUnfollowUser();
+     |         ^^^^^^^^^^^^
+  91 |
+  92 |   const [optimisticFollowing, setOptimisticFollowing] = useState(isFollowing);
+  93 |
+
+the name `unfollowUser` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component Browser]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./dev/RocktownLabs/projects/my-vinyl-shop/components/seller/seller-profile.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Client Component SSR]
+    ./dev/RocktownLabs/projects/my-vinyl-shop/app/seller/[id]/page.tsx [Server Component]
+[03:17:52.811] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:17:53.532] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/seller/rocktownvinyls color: rgb(120, 120, 120) color: inherit {"dp":"/seller/[id]","o":"http://localhost:3000/seller/rocktownvinyls","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600247826}
+[03:17:53.754] Server  ERROR    ⨯ Error: aborted
+[03:17:54.405] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:17:54.518] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[03:17:54.754] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:17:54.754] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/seller/rocktownvinyls","route":"/seller/[id]"}
+[03:17:54.754] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/seller/rocktownvinyls color: rgb(120, 120, 120) color: inherit {"dp":"/seller/[id]","o":"http://localhost:3000/seller/rocktownvinyls","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600249633}
+[03:18:24.615] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/sellers color: rgb(120, 120, 120) color: inherit {"dp":"/sellers","o":"http://localhost:3000/sellers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600279512}
+[03:18:46.121] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/seller/rocktownvinyls color: rgb(120, 120, 120) color: inherit {"dp":"/seller/[id]","o":"http://localhost:3000/seller/rocktownvinyls","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600301014}
+[03:18:53.632] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/sellers color: rgb(120, 120, 120) color: inherit {"dp":"/sellers","o":"http://localhost:3000/sellers","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600308524}
+[03:18:55.031] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600309927}
+[03:20:39.266] Server  LOG      ✓ Compiled in 88ms
+[03:20:43.048] Server  LOG      ✓ Compiled in 103ms
+[03:20:45.938] Server  LOG      ✓ Compiled in 72ms
+[03:20:52.468] Server  LOG      ✓ Compiled in 38ms
+[03:21:42.325] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/browse?genre=electronic color: rgb(120, 120, 120) color: inherit {"dp":"/browse","o":"http://localhost:3000/browse?genre=electronic","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600477193}
+[03:21:45.568] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600480423}
+[03:22:09.999] Browser WARN    Image with src "http://localhost:3000/my-vinyl-shop-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[03:22:09.999] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.3.1","sv":"0.1.3","ts":1766600504862}

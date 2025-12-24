@@ -353,7 +353,7 @@ export default function BrowsePage() {
 
           {/* Results count */}
           <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-muted-foreground">
+            <div className="text-sm text-muted-foreground">
               {isLoading ? (
                 <Skeleton className="h-4 w-32" />
               ) : (
@@ -361,7 +361,7 @@ export default function BrowsePage() {
                   {totalCount} {totalCount === 1 ? "record" : "records"}
                 </>
               )}
-            </p>
+            </div>
           </div>
 
           {/* Product Grid */}

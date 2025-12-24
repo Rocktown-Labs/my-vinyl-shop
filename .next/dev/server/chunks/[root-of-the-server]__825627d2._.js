@@ -104,9 +104,26 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$proje
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/drizzle-orm@0.45.1_dcb8b4d537a66667cbe5a569fd150f72/node_modules/drizzle-orm/sqlite-core/columns/text.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$integer$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/drizzle-orm@0.45.1_dcb8b4d537a66667cbe5a569fd150f72/node_modules/drizzle-orm/sqlite-core/columns/integer.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$real$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/drizzle-orm@0.45.1_dcb8b4d537a66667cbe5a569fd150f72/node_modules/drizzle-orm/sqlite-core/columns/real.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$custom$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/drizzle-orm@0.45.1_dcb8b4d537a66667cbe5a569fd150f72/node_modules/drizzle-orm/sqlite-core/columns/custom.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$relations$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dev/RocktownLabs/projects/my-vinyl-shop/node_modules/.pnpm/drizzle-orm@0.45.1_dcb8b4d537a66667cbe5a569fd150f72/node_modules/drizzle-orm/relations.js [app-route] (ecmascript)");
 ;
 ;
+// Custom vector type for Turso F32_BLOB
+// Google embedding-001 model produces 768-dimensional vectors
+const EMBEDDING_DIMENSIONS = 768;
+const float32Array = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$custom$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customType"])({
+    dataType (config) {
+        return `F32_BLOB(${config.dimensions})`;
+    },
+    fromDriver (value) {
+        return Array.from(new Float32Array(value.buffer));
+    },
+    toDriver (value) {
+        // Return the array as-is; we'll use raw SQL with vector32() function when inserting
+        // This is a workaround since Drizzle doesn't support SQL functions in toDriver
+        return Buffer.from(new Float32Array(value).buffer);
+    }
+});
 const users = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$table$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["sqliteTable"])("users", {
     id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["text"])("id").primaryKey(),
     email: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["text"])("email").notNull(),
@@ -138,6 +155,16 @@ const users = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$Rocktow
     stripeConnectAccountId: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["text"])("stripe_connect_account_id"),
     stripeConnectOnboardingStatus: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["text"])("stripe_connect_onboarding_status"),
     stripeConnectOnboardingLink: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["text"])("stripe_connect_onboarding_link"),
+    // Username change tracking (30-day cooldown)
+    lastUsernameChangeAt: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$integer$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["integer"])("last_username_change_at", {
+        mode: "timestamp"
+    }),
+    // Collection privacy setting
+    collectionPrivacy: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["text"])("collection_privacy").default("public"),
+    // Vector embedding for search (768 dimensions for Google embedding-001)
+    embedding: float32Array("embedding", {
+        dimensions: EMBEDDING_DIMENSIONS
+    }),
     createdAt: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$integer$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["integer"])("created_at", {
         mode: "timestamp"
     }).$defaultFn(()=>new Date()),
@@ -184,6 +211,10 @@ const vinyls = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$Rockto
     // AI-generated data
     aiSuggestedPrice: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$real$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["real"])("ai_suggested_price"),
     aiConditionNotes: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["text"])("ai_condition_notes"),
+    // Vector embedding for search (768 dimensions for Google embedding-001)
+    embedding: float32Array("embedding", {
+        dimensions: EMBEDDING_DIMENSIONS
+    }),
     createdAt: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$integer$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["integer"])("created_at", {
         mode: "timestamp"
     }).$defaultFn(()=>new Date()),
@@ -658,6 +689,28 @@ async function POST(request) {
                 });
             }
         }
+        // Build base update set (always updated)
+        const baseUpdateSet = {
+            username,
+            displayName,
+            bio,
+            avatarUrl,
+            location,
+            country,
+            specializedGenres: genres ? JSON.stringify(genres) : null,
+            isSeller: accountType === "seller" || accountType === "both",
+            shipsWorldwide,
+            subscriptionTier: finalSubscriptionTier,
+            onboardingCompleted: true,
+            updatedAt: new Date()
+        };
+        // Only update Stripe fields if stripeAccountId is provided
+        // This preserves existing Stripe Connect data if user re-runs onboarding without providing it
+        const updateSet = stripeAccountId ? {
+            ...baseUpdateSet,
+            stripeConnectAccountId: stripeAccountId,
+            stripeConnectOnboardingStatus: "pending"
+        } : baseUpdateSet;
         // Create or update user in database
         await __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$lib$2f$db$2f$index$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["db"].insert(__TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$lib$2f$db$2f$schema$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["users"]).values({
             id: userId,
@@ -679,22 +732,7 @@ async function POST(request) {
             updatedAt: new Date()
         }).onConflictDoUpdate({
             target: __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$lib$2f$db$2f$schema$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["users"].id,
-            set: {
-                username,
-                displayName,
-                bio,
-                avatarUrl,
-                location,
-                country,
-                specializedGenres: genres ? JSON.stringify(genres) : null,
-                isSeller: accountType === "seller" || accountType === "both",
-                shipsWorldwide,
-                subscriptionTier: finalSubscriptionTier,
-                stripeConnectAccountId: stripeAccountId || undefined,
-                stripeConnectOnboardingStatus: stripeAccountId ? "pending" : undefined,
-                onboardingCompleted: true,
-                updatedAt: new Date()
-            }
+            set: updateSet
         });
         // Update Clerk user metadata
         await clerk.users.updateUserMetadata(userId, {

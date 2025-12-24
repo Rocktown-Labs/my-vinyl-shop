@@ -141,6 +141,8 @@ const users = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$Rocktow
     lastUsernameChangeAt: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$integer$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["integer"])("last_username_change_at", {
         mode: "timestamp"
     }),
+    // Collection privacy setting
+    collectionPrivacy: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dev$2f$RocktownLabs$2f$projects$2f$my$2d$vinyl$2d$shop$2f$node_modules$2f2e$pnpm$2f$drizzle$2d$orm$40$0$2e$45$2e$1_dcb8b4d537a66667cbe5a569fd150f72$2f$node_modules$2f$drizzle$2d$orm$2f$sqlite$2d$core$2f$columns$2f$text$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["text"])("collection_privacy").default("public"),
     // Vector embedding for search (768 dimensions for Google embedding-001)
     embedding: float32Array("embedding", {
         dimensions: EMBEDDING_DIMENSIONS
