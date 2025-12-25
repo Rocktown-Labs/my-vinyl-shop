@@ -11,7 +11,7 @@ My Vinyl Shop is a comprehensive e-commerce platform specifically designed for t
 - **AI-Powered Listings**: Upload photos of vinyl records and let AI automatically identify albums, assess condition, and suggest pricing
 - **Fixed & Auction Listings**: List records at fixed prices or create auction-style listings with bidding
 - **Collection Management**: Track your personal vinyl collection separate from listings
-- **Advanced Search**: Full-text search powered by Upstash Search for finding records and sellers
+- **Advanced Search**: Vector-based semantic search powered by TursoDB for finding records and sellers
 - **Seller Profiles**: Instagram-style showcase pages for sellers to build their brand
 - **Messaging System**: Direct messaging between buyers and sellers
 - **Order Management**: Complete order tracking from purchase to delivery
@@ -44,6 +44,7 @@ My Vinyl Shop is a comprehensive e-commerce platform specifically designed for t
 
 - **Vercel AI SDK** - AI integration
 - **Google Gemini 2.5 Flash** - Vinyl record analysis and identification
+- **Google Gemini Embedding-001** - Vector embeddings for semantic search
 
 ### Data Fetching
 
@@ -80,7 +81,8 @@ My Vinyl Shop is a comprehensive e-commerce platform specifically designed for t
 ├── lib/                   # Utilities and configurations
 │   ├── db/               # Database schema and connection
 │   ├── hooks/            # Custom React hooks
-│   ├── search.ts         # Search functionality
+│   ├── search-turso.ts   # TursoDB vector search
+│   ├── embeddings.ts     # Embedding generation for vector search
 │   ├── types.ts          # TypeScript types
 │   └── validations.ts    # Zod schemas
 └── public/               # Static assets
@@ -93,7 +95,8 @@ My Vinyl Shop is a comprehensive e-commerce platform specifically designed for t
 - Node.js 18+ or Bun
 - pnpm (recommended) or npm
 - Clerk account for authentication
-- Upstash account for search/Redis (optional for development)
+- TursoDB account for database and vector search
+- Upstash account for Redis (optional for development)
 
 ### Installation
 
@@ -123,8 +126,6 @@ Required environment variables:
 - `CLERK_WEBHOOK_SECRET` - Clerk webhook signing secret (for syncing user data)
 - `TURSO_DATABASE_URL` - Turso database URL
 - `TURSO_AUTH_TOKEN` - Turso authentication token
-- `UPSTASH_SEARCH_REST_URL` - Upstash Search URL (optional)
-- `UPSTASH_SEARCH_REST_TOKEN` - Upstash Search token (optional)
 - `KV_REST_API_URL` or `UPSTASH_REDIS_REST_URL` - Redis URL (optional)
 - `KV_REST_API_TOKEN` or `UPSTASH_REDIS_REST_TOKEN` - Redis token (optional)
 - `BLOB_READ_WRITE_TOKEN` - Vercel Blob token for image uploads
@@ -206,7 +207,8 @@ Upload photos of vinyl records and the AI will:
 
 ### Search & Discovery
 
-- Full-text search across vinyl records and sellers
+- Semantic vector search across vinyl records and sellers using TursoDB
+- Natural language queries with AI-powered embeddings
 - Filter by genre, condition, year, price range
 - Sort by popularity, rating, newest, price
 - Browse by genre categories

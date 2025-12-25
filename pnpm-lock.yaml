@@ -158,9 +158,6 @@ importers:
       '@upstash/redis':
         specifier: 1.35.8
         version: 1.35.8
-      '@upstash/search':
-        specifier: 0.1.7
-        version: 0.1.7
       '@vercel/analytics':
         specifier: 1.3.1
         version: 1.3.1(next@16.0.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
@@ -3005,12 +3002,6 @@ packages:
 
   '@upstash/redis@1.35.8':
     resolution: {integrity: sha512-QqLpVCD9PCPE6hlRzOkz864nfijSdazxtyJLIy9ZeTh6kU2nBIKKfjT5HMHjIRD4BCm6TK1dbUT9pxhFjcvpng==}
-
-  '@upstash/search@0.1.7':
-    resolution: {integrity: sha512-rgJ52TP0eUPLFo4K6TZtiC7qICbJnEwkT+TqaDI1vN8/Hk6qidgNC9dpnUUXCiqfwogty1rlSyBhYfk6PRgXjA==}
-
-  '@upstash/vector@1.2.2':
-    resolution: {integrity: sha512-ptQ9xnxtKqmpNK52PCcHCszlPOLxIBfjsv7ty8RoF95pkjctS9rSjTQ3Pl9bx5VFbpDj+0dMXw88WLt6swDkgQ==}
 
   '@urql/core@5.2.0':
     resolution: {integrity: sha512-/n0ieD0mvvDnVAXEQgX/7qJiVcvYvNkOHeBvkwtylfjydar123caCXcl58PXFY11oU1oquJocVXHxLAbtv4x1A==}
@@ -9312,12 +9303,6 @@ snapshots:
   '@upstash/redis@1.35.8':
     dependencies:
       uncrypto: 0.1.3
-
-  '@upstash/search@0.1.7':
-    dependencies:
-      '@upstash/vector': 1.2.2
-
-  '@upstash/vector@1.2.2': {}
 
   '@urql/core@5.2.0':
     dependencies:

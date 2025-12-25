@@ -32,6 +32,7 @@ interface Seller {
 }
 
 interface SellersListProps {
+  initialData?: Seller[];
   searchQuery: string;
   selectedCountries: string[];
   selectedGenres: string[];
@@ -41,6 +42,7 @@ interface SellersListProps {
 }
 
 export function SellersList({
+  initialData,
   searchQuery,
   selectedCountries,
   selectedGenres,
@@ -49,6 +51,9 @@ export function SellersList({
   shipsWorldwide,
 }: SellersListProps) {
   const { userId } = useAuth();
+
+  // Check if any filters are applied
+  const hasFilters = searchQuery || selectedCountries.length > 0 || selectedGenres.length > 0 || verifiedOnly || shipsWorldwide;
 
   const { data, isLoading } = useQuery({
     queryKey: ["sellers", searchQuery, selectedCountries, selectedGenres, verifiedOnly, shipsWorldwide],
@@ -65,6 +70,9 @@ export function SellersList({
       const data = await res.json();
       return data.sellers as Seller[];
     },
+    initialData: !hasFilters && initialData ? initialData : undefined,
+    enabled: hasFilters || !initialData, // Fetch if filters are applied or no initial data
+    staleTime: 60 * 1000, // 1 minute
   });
 
   // Get current user to show them first if they're a seller
@@ -80,9 +88,10 @@ export function SellersList({
   });
 
   const filteredSellers = useMemo(() => {
-    if (!data) return [];
+    const sellersData = data || initialData || [];
+    if (!sellersData.length) return [];
 
-    let filtered = [...data];
+    let filtered = [...sellersData];
 
     // Apply client-side filters (API does some, but we refine here)
     if (selectedCountries.length > 0) {
@@ -107,7 +116,8 @@ export function SellersList({
     return currentUserSeller ? [currentUserSeller, ...otherSellers] : otherSellers;
   }, [data, selectedCountries, selectedGenres, currentUser, userId]);
 
-  if (isLoading) {
+  // Show loading only if we don't have initial data
+  if (isLoading && !initialData) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
         {Array.from({ length: 8 }).map((_, i) => (
